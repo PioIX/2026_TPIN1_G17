@@ -1,4 +1,4 @@
-# ¿Mayor o Menor? (Scaloneta) 🇦🇷⚽
+# ¿Mayor o Menor? (Scaloneta) 
 ### Proyecto Interdisciplinario - 1er Cuatrimestre
 
 Este proyecto consiste en el desarrollo de una aplicación web interactiva basada en el clásico juego *Higher or Lower* (Mayor o Menor), enfocado exclusivamente en los futbolistas que formaron parte de la Selección Argentina durante el ciclo de conducción técnica de Lionel Scaloni.
