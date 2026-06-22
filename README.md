@@ -52,3 +52,6 @@ El sistema almacena la información mediante una estructura relacional compuesta
 ![Pantalla Modificar Datos](img/10.png)
 ![Pantalla Eliminar Datos](img/11.png)
 ![Pantalla Cerrar sesion](img/12.png)
+
+## Diagrama de Tareas
+![Diagrama Gantt](img/Diagrama.png)

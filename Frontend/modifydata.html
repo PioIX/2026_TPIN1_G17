@@ -7,6 +7,38 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    
+
+    <div class="contenedor-abm">
+        
+        <h1 class="titulo-pantalla">Modificar Datos</h1>
+
+        <div class="bloque-inputs">
+            
+            <select id="selectTablaModificar" class="input-blanco">
+                <option value="" disabled selected hidden>Tabla a la que desea modificar datos</option>
+                <option value="jugadores">Jugadores de la Scaloneta</option>
+                <option value="usuarios">Usuarios del Sistema</option>
+            </select>
+            
+            <select id="selectDatoAEditar" class="input-blanco">
+                <option value="" disabled selected hidden>Dato que quiera modificar</option>
+            </select>
+            
+            <input type="text" id="inputNuevoValor" class="input-blanco" placeholder="Dato nuevo">
+            
+        </div>
+
+        <div class="bloque-botones">
+            <button id="btnEnviarModificar" class="btn-blanco">MODIFICAR DATO</button>
+            <button id="btnVolverAdminModificar" class="btn-blanco">VOLVER</button>
+        </div>
+
+    </div>
+
+    <footer class="pie-creditos">
+        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+        <p class="curso">5B Informatica</p>
+    </footer>
+
 </body>
 </html>

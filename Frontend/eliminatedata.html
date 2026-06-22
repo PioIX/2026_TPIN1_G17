@@ -7,6 +7,36 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    
+
+    <div class="contenedor-abm">
+        
+        <h1 class="titulo-pantalla">Eliminar Datos</h1>
+
+        <div class="bloque-inputs">
+            
+            <select id="selectTablaEliminar" class="input-blanco">
+                <option value="" disabled selected hidden>Tabla a la que desea eliminar datos</option>
+                <option value="jugadores">Jugadores de la Scaloneta</option>
+                <option value="usuarios">Usuarios del Sistema</option>
+            </select>
+            
+            <select id="selectDatoAEliminar" class="input-blanco">
+                <option value="" disabled selected hidden>Dato que quiera eliminar</option>
+            </select>
+            
+        </div>
+
+        <div class="bloque-botones">
+            <button id="btnEnviarEliminar" class="btn-blanco">ELIMINAR DATO</button>
+            <button id="btnVolverAdminEliminar" class="btn-blanco">VOLVER</button>
+        </div>
+
+    </div>
+
+    <footer class="pie-creditos">
+        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+        <p class="curso">5B Informatica</p>
+    </footer>
+
 </body>
 </html>
