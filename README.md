@@ -51,4 +51,4 @@ El sistema almacena la información mediante una estructura relacional compuesta
 ![Pantalla Agregar Datos](img/9.png)
 ![Pantalla Modificar Datos](img/10.png)
 ![Pantalla Eliminar Datos](img/11.png)
-![Pantalla Cerrar sesion](img/14.png)
+![Pantalla Cerrar sesion](img/12.png)
