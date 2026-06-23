@@ -1,18 +1,43 @@
-async function login(usuario, contraseña) {
-  try {
-    const resp = await fetch(`${'http://localhost:4000/'}?usuario=${usuario}&contraseña=${contraseña}`);
-    const resultado = await resp.json();
+function irA(pagina) {
+  window.location.href = pagina;
+}
 
-    if (resultado.length > 0) {
-      console.log("Login exitoso Bienvenido", resultado[0].nombreCompleto);
-      return { exitoso: true, usuario: resultado[0] };
-    } else {
-      console.log("Usuario o contraseña incorrectos.");
-      return { exitoso: false, mensaje: "Datos incorrectos" };
-    }
+async function registrarUsuario() {
+  const usuario = document.getElementById("inputUsuario").value;
+  const contrasena = document.getElementById("inputContrasena").value;
 
-  } catch (error) {
-    console.error("Error en el login:", error);
-    return { exitoso: false, mensaje: "Error de conexión" };
+  const response = await fetch("http://localhost:4000/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ usuario, contrasena }),
+  });
+  const resultado = await response.json();
+  console.log(resultado);
+
+  if (resultado.res === "Usuario agregado") {
+    alert("Usuario registrado con éxito");
+    irA("login.html");
+  } else {
+    alert(resultado.res);
+  }
+}
+
+async function loginUsuario() {
+  const usuario = document.getElementById("inputUsuario").value;
+  const contrasena = document.getElementById("inputContrasena").value;
+
+  const response = await fetch("http://localhost:4000/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ usuario, contrasena }),
+  });
+  const resultado = await response.json();
+  console.log(resultado);
+
+  if (resultado.res === "Login correcto") {
+    alert(`Bienvenido ${resultado.usuario.usuario}`);
+    irA("mainmenu.html");
+  } else {
+    alert(resultado.res);
   }
 }
