@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Primer proyecto interdisciplinario",
   "main": "index.js",
+
   "scripts": {
-    "test": "nodemon index.js"
-  },
+  "home": "nodemon --env-file=home.env index.js",
+  "pio": "nodemon --env-file=pio.env index.js"
+},
   "keywords": [
     "ES"
   ],
