@@ -1,7 +1,3 @@
-function irA(pagina) {
-  window.location.href = pagina;
-}
-
 async function registrarUsuario() {
   const usuario = document.getElementById("inputUsuario").value;
   const contrasena = document.getElementById("inputContrasena").value;
