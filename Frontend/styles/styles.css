@@ -1,0 +1,248 @@
+
+:root {
+    --celeste-fondo: #6cc7f4;
+    --celeste-claro: #a7dffc;
+    --blanco: #ffffff;
+    --gris-oscuro: #1c2d42;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, var(--celeste-fondo), var(--celeste-claro));
+    color: var(--gris-oscuro);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+}
+
+body > main,
+.contenedor-admin,
+.contenedor-stats,
+.contenedor-ranking,
+.contenedor-abm {
+    width: min(100%, 760px);
+    margin: 0 auto;
+    padding: 1.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.4rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+p,
+label {
+    font-weight: 600;
+}
+
+button,
+.input-blanco,
+select,
+input[type="text"],
+input[type="password"] {
+    font: inherit;
+}
+
+button {
+    width: 100%;
+    max-width: 360px;
+    margin: 0.8rem auto;
+    padding: 1rem 1.2rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--blanco);
+    color: var(--gris-oscuro);
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.95);
+}
+
+.input-blanco,
+select,
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    max-width: 560px;
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--gris-oscuro);
+}
+
+.bloque-botones-verticales,
+.bloque-botones,
+.bloque-inputs,
+#contenedor-juego {
+    display: grid;
+    gap: 1rem;
+}
+
+#jugadores {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.jugador,
+.indicador-blanco,
+.fila-ranking,
+#pantalla-fin {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+#pantalla-fin.oculto {
+    display: none;
+}
+
+footer,
+.pie-creditos {
+    margin-top: 1.8rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+.jugador img {
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    object-fit: cover;
+}
+
+.jugador h2 {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+}
+
+.jugador p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.botones-comparar {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+}
+
+#btn-mas-partidos,
+#btn-menos-partidos,
+#btn-volver-menu {
+    max-width: 100%;
+    width: 100%;
+    background: var(--blanco);
+    color: var(--gris-oscuro);
+    border-radius: 999px;
+    padding: 0.95rem 1rem;
+    font-weight: 800;
+    box-shadow: var(--sombra);
+}
+
+#btn-mas-partidos:hover,
+#btn-menos-partidos:hover,
+#btn-volver-menu:hover {
+    transform: translateY(-2px);
+}
+
+#puntaje-actual,
+#infoMejorPuntaje,
+#infoPartidasJugadas,
+#puntaje-final,
+#record-actual {
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 999px;
+    padding: 0.95rem 1.4rem;
+    font-weight: 800;
+    box-shadow: var(--sombra);
+}
+
+#pantalla-fin {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+    padding: 2rem 1.5rem;
+    box-shadow: var(--sombra);
+}
+
+#pantalla-fin.oculto {
+    display: none;
+}
+
+#encabezado-juego {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#encabezado-juego h1 {
+    color: var(--blanco);
+    margin: 0;
+}
+
+main > section,
+main > header,
+main > footer {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 860px) {
+    #jugadores {
+        grid-template-columns: 1fr;
+    }
+
+    .bloque-botones-verticales,
+    .bloque-inputs,
+    .botones-comparar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .contenedor-admin,
+    .contenedor-stats,
+    .contenedor-ranking,
+    .contenedor-abm,
+    main {
+        padding: 1.5rem 1rem 1.2rem;
+    }
+}
