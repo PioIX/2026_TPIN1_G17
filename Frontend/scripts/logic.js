@@ -12,7 +12,7 @@ async function registrarUsuario() {
 
   if (resultado.res === "Usuario agregado") {
     alert("Usuario registrado con éxito");
-    irA("login.html");
+    window.location.href = "login.html";
   } else {
     alert(resultado.res);
   }
@@ -32,7 +32,7 @@ async function loginUsuario() {
 
   if (resultado.res === "Login correcto") {
     alert(`Bienvenido ${resultado.usuario.usuario}`);
-    irA("mainmenu.html");
+    window.location.href = "mainmenu.html";
   } else {
     alert(resultado.res);
   }
