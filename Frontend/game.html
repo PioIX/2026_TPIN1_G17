@@ -6,48 +6,40 @@
     <title>Jugar - Mayor o Menor</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
-<body>
+    <body>
+        <main>
+            <header id="encabezado-juego">
+                <h1 id="pregunta">¿Quién tiene más partidos jugados?</h1>
+            </header>
 
-    <main>
-        <header id="encabezado-juego">
-            <h1 id="pregunta">¿Quién tiene más partidos jugados?</h1>
-        </header>
+            <section id="contenedor-juego">
+                <p id="puntaje-actual">PUNTAJE ACTUAL: <span id="valor-puntaje-actual">0</span></p>
 
-        <section id="contenedor-juego">
-            <p id="puntaje-actual">PUNTAJE ACTUAL: <span id="valor-puntaje-actual">0</span></p>
+                <div id="jugadores">
+                    <!-- <article class="jugador" id="jugador-izquierda"> -->
+                        <img id="img-izquierda" src="" alt="">
+                        <h2 id="nombre-izquierda"></h2>
+                        <p id="partidos-izquierda"></p>
+                    </article>
 
-            <div id="jugadores">
-                <article class="jugador" id="jugador-izquierda">
-                    <img id="img-izquierda" src="" alt="">
-                    <h2 id="nombre-izquierda"></h2>
-                    <p id="partidos-izquierda"></p>
-                </article>
+                    <article class="jugador" id="jugador-derecha">
+                        <img id="img-derecha" src="" alt="">
+                        <h2 id="nombre-derecha"></h2>
+                        <div class="botones-comparar">
+                            <button type="button" id="btn-mas-partidos">MAS PARTIDOS</button>
+                            <button type="button" id="btn-menos-partidos">MENOS PARTIDOS</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
 
-                <article class="jugador" id="jugador-derecha">
-                    <img id="img-derecha" src="" alt="">
-                    <h2 id="nombre-derecha"></h2>
-                    <div class="botones-comparar">
-                        <button type="button" id="btn-mas-partidos">MAS PARTIDOS</button>
-                        <button type="button" id="btn-menos-partidos">MENOS PARTIDOS</button>
-                    </div>
-                </article>
-            </div>
-        </section>
+            <footer>
+                <p>Hilario Reddel-Tomas Miranda-Lucas Fabiani-Facundo Poet</p>
+                <p>5B Informática</p>
+            </footer>
+        </main>
 
-        <section id="pantalla-fin" class="oculto">
-            <h2>Fin de la partida</h2>
-            <p id="puntaje-final"></p>
-            <p id="record-actual"></p>
-            <button type="button" id="btn-volver-menu">VOLVER AL MENÚ</button>
-        </section>
-
-        <footer>
-            <p>Hilario Reddel-Tomas Miranda-Lucas Fabiani-Facundo Poet</p>
-            <p>5B Informática</p>
-        </footer>
-    </main>
-
-    <script src="scripts/logic.js" defer></script>
-    <script src="scripts/dom.js" defer></script>
-</body>
+        <script src="scripts/logic.js"></script>
+        <script src="scripts/dom.js"></script>
+    </body>
 </html>
