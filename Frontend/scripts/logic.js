@@ -37,23 +37,3 @@ async function loginUsuario() {
     alert(resultado.res);
   }
 }
-
-/*
-async function administrador() {
-    const response = await fetch("http://localhost:4000/admin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ es_admin }),
-  });
-  const resultado = await response.json();
-  console.log(resultado);
-
-  if (resultado.res === "1") {
-    alert(`Bienvenido ${resultado.usuario.usuario}`);
-    window.location.href = "admin.html";
-  } else {
-    alert(resultado.res);
-  }
-}
-
-*/
