@@ -10,22 +10,24 @@
 
 <body>
 
-    <main>
+    <main class="contenedor-general">
         <header>
-            <h1>Registrarse</h1>
+            <h1 class="titulo-pantalla">Registrarse</h1>
         </header>
 
-        <section>
+        <section class="bloque-inputs">
             <form>
                 <input id="inputUsuario" type="text" placeholder="Ingrese su usuario aquí">
                 <input id="inputContrasena" type="password" placeholder="Ingrese su contraseña aquí">
-                <button type="button" onclick="registrarUsuario()">REGISTRARSE</button>
+                <button type="button" class="btn-blanco" onclick="registrarUsuario()">REGISTRARSE</button>
 
             </form>
-            <a href="index.html"><button type="button">VOLVER</button></a>
+            <div class="bloque-botones">
+                <a href="index.html"><button type="button" class="btn-blanco">VOLVER</button></a>
+            </div>
         </section>
 
-        <footer>
+        <footer class="pie-creditos">
             <p>Hilario Reddel-Tomas Miranda-Lucas Fabiani-Facundo Poet</p>
             <p>5B Informática</p>
         </footer>

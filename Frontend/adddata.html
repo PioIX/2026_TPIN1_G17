@@ -8,29 +8,25 @@
 </head>
 <body>
 
-    <div class="contenedor-abm">
+    <div class="contenedor-general">
         
         <h1 class="titulo-pantalla">Agregar Datos</h1>
 
         <div class="bloque-inputs">
             
             <h1>Agregar un equipo nuevo</h1>
-                <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text"/>
-                <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
-                <input id="ingresoPosicionEnLaCancha" placeholder="Ingrese la posicion en la cancha" type="text" />
-            <button onclick="tomarDatos()">Enviar al POST</button>
+                <input id="ingresoJugadorNuevo" class="input-blanco" placeholder="Ingrese el nombre completo del jugador" type="text"/>
+                <input id="ingresoCantidadDePartidos" class="input-blanco" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
+                <input id="ingresoPosicionEnLaCancha" class="input-blanco" placeholder="Ingrese la posicion en la cancha" type="text" />
+            <button class="btn-blanco" type="button" onclick="tomarDatos()">Enviar al POST</button>
 
             <label>Elija el equipo que desea eliminar </label>
-            <select id="selectEquipos"></select>
-
-
-
-
-
+            <select id="selectEquipos" class="input-blanco"></select>
+        </div>
 
         <div class="bloque-botones">
-            <button id="btnEnviarAgregar" class="btn-blanco">AGREGAR DATOS</button>
-            <button id="btnVolverAdminAgregar" class="btn-blanco">VOLVER</button>
+            <button id="btnEnviarAgregar" class="btn-blanco" type="button">AGREGAR DATOS</button>
+            <a href="admin.html"><button id="btnVolverAdminAgregar" class="btn-blanco" type="button">VOLVER</button></a>
         </div>
 
     </div>
