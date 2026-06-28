@@ -14,23 +14,15 @@
 
         <div class="bloque-inputs">
             
-            <h1>Agregar un equipo nuevo</h1>
-                <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text"/>
-                <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
-                <input id="ingresoPosicionEnLaCancha" placeholder="Ingrese la posicion en la cancha" type="text" />
-            <button onclick="tomarDatos()">Enviar al POST</button>
-
-            <label>Elija el equipo que desea eliminar </label>
-            <select id="selectEquipos"></select>
-
-
-
-
-
+            <h1>Agregar un jugador nuevo</h1>
+            <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text"/>
+            <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
+            <input id="ingresoPosicionEnLaCancha" placeholder="Ingrese la posicion en la cancha" type="text" />
+            
 
         <div class="bloque-botones">
-            <button id="btnEnviarAgregar" class="btn-blanco">AGREGAR DATOS</button>
-            <button id="btnVolverAdminAgregar" class="btn-blanco">VOLVER</button>
+            <button id="btnEnviarAgregar" class="btn-blanco" onclick="tomarDatos()">AGREGAR DATOS</button>
+            <a href="admin.html"><button type="button">VOLVER</button></a>
         </div>
 
     </div>

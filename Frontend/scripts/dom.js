@@ -9,3 +9,6 @@ function getCantidadDePartidos() {
 function getPosicionEnLaCancha() {
     return document.getElementById("ingresoPosicionEnLaCancha").value
 }
+
+
+

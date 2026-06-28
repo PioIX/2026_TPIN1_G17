@@ -39,14 +39,14 @@ async function loginUsuario() {
 }
 
 
-/*
+
 
 // 1
 function tomarDatos() {
   let datos = {
-    nombre_completo: getNombreDeEquipo(),
-    partidos_totales: getCantidadDeSocios(),
-    posicion_en_la_cancha: getCantidadDeJugadores(),
+    nombre_completo: getNombreCompleto(),
+    partidos_totales: getPartidosTotales(),
+    posicion_en_la_cancha: getPosicionEnLaCancha(),
   };
 
   llamadoAlPost(datos);
@@ -71,7 +71,7 @@ async function llamadoAlPost(datos) {
 }
 
 
-
+/*
 
 
 

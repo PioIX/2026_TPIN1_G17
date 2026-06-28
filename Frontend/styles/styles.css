@@ -27,12 +27,31 @@ footer{
     box-sizing: border-box;
     color: #056572;
 }
+button,
+.botonindex,
+.btn-blanco {
+    padding: 16px 60px;
+    border: none;
+    border-radius: 50px;
+    background: #ffffff;
+    color: #222;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s, transform 0.1s;
+}
+
+button:hover,
+.botonindex:hover,
+.btn-blanco:hover {
+    background: #e0f0ff;
+    transform: scale(1.03);
+}
+
 .botonindex {
-    padding: 10px;
     margin: 10px;
-    border: #336eee solid 2px ;
-    border-radius: 5px;
-} 
+}
 main {
     display: flex;
     flex-direction: column;

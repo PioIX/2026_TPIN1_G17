@@ -30,8 +30,8 @@ app.get("/", function (req, res) {
 // 2
 const MySQL = require("./modulos/mysql.js");
 
-try {
-  app.post('/register', async function (req, res) {
+app.post('/register', async function (req, res) {
+    try {
     console.log(req.body)
     let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
     console.log(req.body)
@@ -44,20 +44,23 @@ try {
         ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
       res.send({res:"Usuario agregado"})
     }
-  })
     
-} catch (error) {
+  } catch (error) {
     console.error("Error al borrar:", error);
     res.status(500).send({ 
-    res: "Error del servidor" 
-  });
-}
+      res: "Error del servidor" 
+    });
+  }
+})
 
 
 
 
 app.post('/login', async function (req, res) {
   try {
+    if (!req.body.usuario || !req.body.contrasena){
+    return res.send({ res: "No pueden haber campos vacíos" });
+    }
     let usuario = await realizarQuery(`SELECT * FROM Users WHERE usuario='${req.body.usuario}' AND contrasena='${req.body.contrasena}'`);
     if (usuario.length > 0) {
       res.send({ res: "Login correcto", usuario: usuario[0] });
@@ -71,39 +74,34 @@ app.post('/login', async function (req, res) {
 });
 
 
+app.post('/adddata', async function (req, res) {
+  try {
+    if (!req.body.nombre_completo || !req.body.partidos_totales || !req.body.posicion_en_la_cancha){
+    return res.send({ res: "No pueden haber campos vacíos" });
+    }
+    console.log(req.body);
+
+    let jugadorExistente = await realizarQuery(`SELECT nombre_completo FROM Jugadores WHERE nombre_completo='${req.body.nombre_completo}'`);
+    
+    if (jugadorExistente.length > 0) {
+      res.send({res:"Ya existe este jugador"});
+    }
+    else {
+    realizarQuery(`
+      INSERT INTO Jugadores (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
+      ("${req.body.nombre_completo}", "${req.body.partidos_totales}", "${req.body.posicion_en_la_cancha}");
+    `);
+    res.send({ res: "Jugador agregado" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
 
 /*
 
 
-
-async function envioUsuario() {
-  let datos = {
-    nombre: document.getElementById("inputNombre").value
-  };
-
-  const response = await fetch("http://localhost:4000/usuarios", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(datos),
-  });
-
-  let result = await response.json();
-  console.log(result);
-}
-
-
-//2
-function tomarDatos() {
-  let datos = {
-    name: document.getElementById("name").value,
-    password: document.getElementById("password").value,
-    pais: document.getElementByName("pais").value,
-    checkbox: document.getElementById("checkbox").value,
-  }
-  envioUsuario(datos)
-}
 
 
 async function envioUsuario(datos) {
@@ -128,31 +126,6 @@ async function envioUsuario(datos) {
 
 
 //3
-app.post('/usuarios', async function (req, res) {
-  try {
-    if (!req.body.nombre || !req.body.email || !req.body.pais || !req.body.puntaje){
-    return res.send({ res: "No pueden haber campos vacíos" });
-    }
-    console.log(req.body);
-
-    // let equipoExistente = await realizarQuery(`SELECT nombre_de_equipo FROM Equipos WHERE nombre_de_equipo='${req.body.nombre_de_equipo}'`);
-    //ACA SE FIJA QUE NO ESTE REPETIDO
-
-    //if (equipoExistente.length > 0) {
-    //  res.send({res:"Ya existe este equipo"});
-    //}  CON ESTAS LINEAS VE SI ESTA REPETIDO O NO Y SI ESTA REPETIDO LO REBOTA
-    //else {
-    realizarQuery(`
-      INSERT INTO Usuarios (nombre, email, pais, puntaje) VALUES
-      ("${req.body.nombre}", "${req.body.email}", "${req.body.pais}", "${req.body.puntaje}");
-    `);
-    res.send({ res: "Usuario agregado" });
-    //}
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ res: "Error del servidor" });
-  }
-});
 
 
 //4 
@@ -201,11 +174,4 @@ app.delete('/usuariosBorrar', async function (req, res) {
 
 
 
-
-
-
-
-
-
 */
-
