@@ -14,15 +14,19 @@
 
         <div class="bloque-inputs">
             
-            <select id="selectTablaAgregar" class="input-blanco">
-                <option value="" disabled selected hidden>Tabla a la que desea agregar datos</option>
-                <option value="jugadores">Jugadores de la Scaloneta</option>
-                <option value="usuarios">Usuarios del Sistema</option>
-            </select>
-            
-            <input type="text" id="inputDatoNuevo" class="input-blanco" placeholder="Dato nuevo">
-            
-        </div>
+            <h1>Agregar un equipo nuevo</h1>
+                <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text"/>
+                <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
+                <input id="ingresoPosicionEnLaCancha" placeholder="Ingrese la posicion en la cancha" type="text" />
+            <button onclick="tomarDatos()">Enviar al POST</button>
+
+            <label>Elija el equipo que desea eliminar </label>
+            <select id="selectEquipos"></select>
+
+
+
+
+
 
         <div class="bloque-botones">
             <button id="btnEnviarAgregar" class="btn-blanco">AGREGAR DATOS</button>
@@ -33,7 +37,7 @@
 
     <footer class="pie-creditos">
         <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
-        <p class="curso">5B Informatica</p>
+        <p class="curso">5B Informática</p>
     </footer>
 
 </body>
