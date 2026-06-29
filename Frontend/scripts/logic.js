@@ -44,7 +44,6 @@ async function loginUsuario() {
 
 
 // FUNCION PARA AGREGAR JUGADORES
-// 1
 function tomarDatos() {
   let datos = {
     nombre_completo: getNombreCompleto(),
@@ -118,7 +117,7 @@ async function llamadoAlDeleteJugadores() {
 }
 
 
-// FUNCION PARA ELIMINAR JUGADORES
+// FUNCION PARA ELIMINAR USUARIOS
 async function cargarUsuarios() {
     const response = await fetch("http://localhost:4000/usuarios");
     const usuarios = await response.json();
@@ -182,50 +181,6 @@ async function llamadoAlDeleteUsuarios() {
 
 
 
-
-/*
-
-
-
-async function cargarEquipos() {
-  const response = await fetch("http://localhost:4000/");
-  const equipos = await response.json();
-  console.log(equipos);
-
-  let contenido = "";
-
-  equipos.forEach(function (equipo) {
-    contenido += `<option id="${equipo.nombre_de_equipo}" value="${equipo.nombre_de_equipo}">${equipo.nombre_de_equipo}</option>`;
-  });
-  document.getElementById("selectEquipos").innerHTML = contenido;
-}
-cargarEquipos();
-
-async function llamadoAlDelete() {
-  //Mando los datos al BACKEND
-  //   let nombre = document.getElementById("selectEquipos").value;
-
-  let datos = {
-    nombre_de_equipo: document.getElementById("selectEquipos").value,
-  };
-
-  console.log("Datos: ", datos);
-  const response = await fetch("http://localhost:4000/equiposBorrar", {
-    method: "DELETE", //GET, POST, PUT o DELETE
-    headers: {
-      //Va siempre igual, le aclaro que la informacion va a viajar como JSON
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
-  });
-  // --Me quedo esperando--
-
-  //En response tengo la respuesta del BACKEND
-    let result = await response.json();
-    console.log(result)
-  cargarEquipos();
-}
-*/
 
 /*
 vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
