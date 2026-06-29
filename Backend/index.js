@@ -113,7 +113,6 @@ app.post("/adddata", async function (req, res) {
     res.status(500).send({ res: "Error del servidor" });
   }
 });
-  
 
 
 /*
