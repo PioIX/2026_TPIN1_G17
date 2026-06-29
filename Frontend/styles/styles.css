@@ -117,7 +117,7 @@ main {
 .pie-creditos {
     margin-top: auto;
     text-align: center;
-    padding: 15px;
+    padding: 200px;
     width: 100%;
     box-sizing: border-box;
     color: #000000;
@@ -203,3 +203,6 @@ main {
     margin-bottom: 20px;
 }
 
+#pregunta {
+    color:white
+}
