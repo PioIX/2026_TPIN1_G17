@@ -1,8 +1,8 @@
-function getNombreDeJugador() {
+function getNombreCompleto() {
     return document.getElementById("ingresoJugadorNuevo").value
 }
 
-function getCantidadDePartidos() {
+function getPartidosTotales() {
     return document.getElementById("ingresoCantidadDePartidos").value
 }
 
