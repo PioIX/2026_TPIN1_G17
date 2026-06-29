@@ -74,30 +74,46 @@ app.post('/login', async function (req, res) {
 });
 
 
-app.post('/adddata', async function (req, res) {
+app.post("/adddata", async function (req, res) {
   try {
-    if (!req.body.nombre_completo || !req.body.partidos_totales || !req.body.posicion_en_la_cancha){
-    return res.send({ res: "No pueden haber campos vacíos" });
+    if (
+      !req.body.nombre_completo ||
+      !req.body.partidos_totales ||
+      !req.body.posicion_en_la_cancha
+    ) {
+      return res.send({ res: "No pueden haber campos vacíos" });
     }
+    const posicionesValidas = [
+      "delantero",
+      "defensor",
+      "arquero",
+      "mediocampista",
+    ];
+    if (!posicionesValidas.includes(req.body.posicion_en_la_cancha)) {
+      return res.send({ res: "Posición en la cancha inválida" });
+    }
+
     console.log(req.body);
 
-    let jugadorExistente = await realizarQuery(`SELECT nombre_completo FROM Jugadores WHERE nombre_completo='${req.body.nombre_completo}'`);
-    
+    let jugadorExistente = await realizarQuery(
+      `SELECT nombre_completo FROM Jugadores WHERE nombre_completo='${req.body.nombre_completo}'`
+    );
+
     if (jugadorExistente.length > 0) {
-      res.send({res:"Ya existe este jugador"});
-    }
-    else {
-    realizarQuery(`
-      INSERT INTO Jugadores (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
-      ("${req.body.nombre_completo}", "${req.body.partidos_totales}", "${req.body.posicion_en_la_cancha}");
-    `);
-    res.send({ res: "Jugador agregado" });
+      res.send({ res: "Ya existe este jugador" });
+    } else {
+      realizarQuery(`
+        INSERT INTO Jugadores (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
+        ("${req.body.nombre_completo}", "${req.body.partidos_totales}", "${req.body.posicion_en_la_cancha}");
+      `);
+      res.send({ res: "Jugador agregado" });
     }
   } catch (error) {
     console.error(error);
     res.status(500).send({ res: "Error del servidor" });
   }
 });
+  
 
 /*
 

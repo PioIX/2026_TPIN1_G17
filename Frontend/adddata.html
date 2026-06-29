@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Datos - Versión Scaloneta</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
 
     <div class="contenedor-general">
-        
+
         <h1 class="titulo-pantalla">Agregar Datos</h1>
 
         <div class="bloque-inputs">
-            
-            <h1>Agregar un jugador nuevo</h1>
-            <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text"/>
-            <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
-            <input id="ingresoPosicionEnLaCancha" placeholder="Ingrese la posicion en la cancha" type="text" />
-            
 
-        <div class="bloque-botones">
-            <button id="btnEnviarAgregar" class="btn-blanco" onclick="tomarDatos()">AGREGAR DATOS</button>
-            <a href="admin.html"><button type="button">VOLVER</button></a>
+            <h1>Agregar un jugador nuevo</h1>
+            <input id="ingresoJugadorNuevo" placeholder="Ingrese el nombre completo del jugador" type="text" />
+            <input id="ingresoCantidadDePartidos" placeholder="Ingrese la cantidad de partidos jugados" type="number" />
+            <select id="ingresoPosicionEnLaCancha">
+                <option value="" disabled selected hidden>Posición en la cancha</option>
+                <option value="arquero">Arquero</option>
+                <option value="defensor">Defensor</option>
+                <option value="mediocampista">Mediocampista</option>
+                <option value="delantero">Delantero</option>
+            </select>
+
+
+            <div class="bloque-botones">
+                <button id="btnEnviarAgregar" class="btn-blanco" onclick="tomarDatos()">AGREGAR DATOS</button>
+                <a href="admin.html"><button type="button">VOLVER</button></a>
+            </div>
+
         </div>
 
-    </div>
-
-    <footer class="pie-creditos">
-        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
-        <p class="curso">5B Informática</p>
-    </footer>
-
+        <footer class="pie-creditos">
+            <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+            <p class="curso">5B Informática</p>
+        </footer>
+        <script src="scripts/logic.js"></script>
+        <script src="scripts/dom.js"></script>
 </body>
+
 </html>

@@ -48,7 +48,7 @@ function tomarDatos() {
     partidos_totales: getPartidosTotales(),
     posicion_en_la_cancha: getPosicionEnLaCancha(),
   };
-
+  
   llamadoAlPost(datos);
 }
 
