@@ -71,6 +71,14 @@ async function llamadoAlPost(datos) {
 }
 
 
+async function llamadoAlDelete() {
+  //Mando los datos al BACKEND
+  let nombre = document.getElementById("selectEquipos").value;
+  let datos = {
+    nombre_de_equipo: document.getElementById("selectEquipos").value,
+  };}
+
+
 /*
 
 
