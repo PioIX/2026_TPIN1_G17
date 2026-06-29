@@ -30,8 +30,9 @@ async function loginUsuario() {
   const resultado = await response.json();
   console.log(resultado);
 
-  if (resultado.res === "Login correcto") {
+  if (resultado.res === "Login correcto" ) {
     alert(`Bienvenido ${resultado.usuario.usuario}`);
+    localStorage.setItem("es_admin", resultado.usuario.es_admin);
     window.location.href = "mainmenu.html";
   } else {
     alert(resultado.res);
