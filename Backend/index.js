@@ -84,10 +84,10 @@ app.post("/adddata", async function (req, res) {
       return res.send({ res: "No pueden haber campos vacíos" });
     }
     const posicionesValidas = [
-      "delantero",
-      "defensor",
-      "arquero",
-      "mediocampista",
+      "Delantero",
+      "Defensor",
+      "Arquero",
+      "Mediocampista",
     ];
     if (!posicionesValidas.includes(req.body.posicion_en_la_cancha)) {
       return res.send({ res: "Posición en la cancha inválida" });
@@ -96,14 +96,14 @@ app.post("/adddata", async function (req, res) {
     console.log(req.body);
 
     let jugadorExistente = await realizarQuery(
-      `SELECT nombre_completo FROM Jugadores WHERE nombre_completo='${req.body.nombre_completo}'`
+      `SELECT nombre_completo FROM Players WHERE nombre_completo='${req.body.nombre_completo}'`
     );
 
     if (jugadorExistente.length > 0) {
       res.send({ res: "Ya existe este jugador" });
     } else {
       realizarQuery(`
-        INSERT INTO Jugadores (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
+        INSERT INTO Players (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
         ("${req.body.nombre_completo}", "${req.body.partidos_totales}", "${req.body.posicion_en_la_cancha}");
       `);
       res.send({ res: "Jugador agregado" });

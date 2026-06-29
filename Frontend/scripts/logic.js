@@ -122,3 +122,7 @@ async function llamadoAlDelete() {
   cargarEquipos();
 }
 */
+
+/*
+vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
+*/
