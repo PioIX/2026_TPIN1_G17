@@ -54,7 +54,15 @@ app.post('/register', async function (req, res) {
 })
 
 
-
+app.get("/jugadores", async function (req, res) {
+  try {
+    let jugadores = await realizarQuery(`SELECT * FROM Players`);
+    res.send(jugadores);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
 
 app.post('/login', async function (req, res) {
   try {
@@ -113,6 +121,31 @@ app.post("/adddata", async function (req, res) {
     res.status(500).send({ res: "Error del servidor" });
   }
 });
+
+
+
+
+app.delete("/jugadoresBorrar", async function (req, res) {
+  try {
+    console.log("TEST:", req.body.nombre_completo);
+    if (req.body.nombre_completo != "") {
+      await realizarQuery(
+        `DELETE FROM Players WHERE nombre_completo='${req.body.nombre_completo}';`
+      );
+      res.send({ res: "Jugador eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del jugador" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
+});
+  
+
+
 
 
 /*
