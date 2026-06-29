@@ -1,3 +1,4 @@
+// REGISTER
 async function registrarUsuario() {
   const usuario = document.getElementById("inputUsuario").value;
   const contrasena = document.getElementById("inputContrasena").value;
@@ -18,6 +19,7 @@ async function registrarUsuario() {
   }
 }
 
+// LOGIN
 async function loginUsuario() {
   const usuario = document.getElementById("inputUsuario").value;
   const contrasena = document.getElementById("inputContrasena").value;
@@ -41,7 +43,7 @@ async function loginUsuario() {
 
 
 
-
+// FUNCION PARA AGREGAR JUGADORES
 // 1
 function tomarDatos() {
   let datos = {
@@ -71,7 +73,7 @@ async function llamadoAlPost(datos) {
   console.log(result);
 }
 
-//3
+// FUNCION PARA ELIMINAR JUGADORES
 async function cargarJugadores() {
     const response = await fetch("http://localhost:4000/jugadores");
     const jugadores = await response.json();
@@ -90,30 +92,96 @@ if (document.getElementById("selectJugadores")) {
  
 
 
-  async function llamadoAlDeleteJugadores() {
-    //Mando los datos al BACKEND
-    //   let nombre = document.getElementById("selectEquipos").value;
-  
-    let datos = {
-      nombre_completo: document.getElementById("selectJugadores").value,
-    };
-  
-    console.log("Datos: ", datos);
-    const response = await fetch("http://localhost:4000/jugadoresBorrar", {
-      method: "DELETE", //GET, POST, PUT o DELETE
-      headers: {
-        //Va siempre igual, le aclaro que la informacion va a viajar como JSON
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
-    });
+async function llamadoAlDeleteJugadores() {
+  //Mando los datos al BACKEND
+  //   let nombre = document.getElementById("selectEquipos").value;
+
+  let datos = {
+    nombre_completo: document.getElementById("selectJugadores").value,
+  };
+
+  console.log("Datos: ", datos);
+  const response = await fetch("http://localhost:4000/jugadoresBorrar", {
+    method: "DELETE", //GET, POST, PUT o DELETE
+    headers: {
+      //Va siempre igual, le aclaro que la informacion va a viajar como JSON
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
+  });
     // --Me quedo esperando--
   
     //En response tengo la respuesta del BACKEND
-      let result = await response.json();
-      console.log(result)
-    cargarJugadores();
-  }
+    let result = await response.json();
+    console.log(result)
+  cargarJugadores();
+}
+
+
+// FUNCION PARA ELIMINAR JUGADORES
+async function cargarUsuarios() {
+    const response = await fetch("http://localhost:4000/usuarios");
+    const usuarios = await response.json();
+    console.log(usuarios);
+
+    let contenido = "";
+
+    usuarios.forEach(function (usuario) {
+      contenido += `<option id="${usuario.usuario}" value="${usuario.usuario}">${usuario.usuario}</option>`;
+    });
+    document.getElementById("selectUsuarios").innerHTML = contenido;
+}
+if (document.getElementById("selectUsuarios")) {
+  cargarUsuarios();
+}
+ 
+
+
+async function llamadoAlDeleteUsuarios() {
+  //Mando los datos al BACKEND
+  //   let nombre = document.getElementById("selectEquipos").value;
+
+  let datos = {
+    usuario: document.getElementById("selectUsuarios").value,
+  };
+
+  console.log("Datos: ", datos);
+  const response = await fetch("http://localhost:4000/usuariosBorrar", {
+    method: "DELETE", //GET, POST, PUT o DELETE
+    headers: {
+      //Va siempre igual, le aclaro que la informacion va a viajar como JSON
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
+  });
+    // --Me quedo esperando--
+  
+    //En response tengo la respuesta del BACKEND
+    let result = await response.json();
+    console.log(result)
+  cargarUsuarios();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 

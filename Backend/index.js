@@ -30,30 +30,6 @@ app.get("/", function (req, res) {
 // 2
 const MySQL = require("./modulos/mysql.js");
 
-app.post('/register', async function (req, res) {
-    try {
-    console.log(req.body)
-    let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
-    console.log(req.body)
-    if (usuarioExistente.length > 0) {
-      res.send({res:"Ya existe este usuario"});
-    }
-    else {
-      realizarQuery(`
-        INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
-        ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
-      res.send({res:"Usuario agregado"})
-    }
-    
-  } catch (error) {
-    console.error("Error al borrar:", error);
-    res.status(500).send({ 
-      res: "Error del servidor" 
-    });
-  }
-})
-
-
 app.get("/jugadores", async function (req, res) {
   try {
     let jugadores = await realizarQuery(`SELECT * FROM Players`);
@@ -63,6 +39,44 @@ app.get("/jugadores", async function (req, res) {
     res.status(500).send({ res: "Error del servidor" });
   }
 });
+
+
+app.get("/usuarios", async function (req, res) {
+  try {
+    let usuarios = await realizarQuery(`SELECT usuario FROM Users`);
+    res.send(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.post('/register', async function (req, res) {
+  try {
+  console.log(req.body)
+  let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
+  console.log(req.body)
+  if (usuarioExistente.length > 0) {
+    res.send({res:"Ya existe este usuario"});
+  }
+  else {
+    realizarQuery(`
+      INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
+      ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
+    res.send({res:"Usuario agregado"})
+  }
+  
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({ 
+      res: "Error del servidor" 
+    });
+  }
+})
+
+
 
 app.post('/login', async function (req, res) {
   try {
@@ -145,82 +159,23 @@ app.delete("/jugadoresBorrar", async function (req, res) {
 });
   
 
-
-
-
-/*
-
-
-
-
-async function envioUsuario(datos) {
-    const nombre = document.getElementById("name").value; 
-
-    const response = await fetch('http://localhost:4000/login', {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datos) //JSON.stringify convierte de objeto a JSON
-    })
-
-
-    console.log(response)
-    //Desarma el json y lo arma como un objeto
-    let result = await response.json()
-    console.log(result)
-}
-
-
-
-
-//3
-
-
-//4 
-let datos = {
-  id: document.getElementById("selectUsuarios").value,
-  puntaje: document.getElementById("inputPuntaje").value
-};
-
-app.put('/usuariosActualizar', async function (req, res) {
-  console.log(req.body);
-  await MySQL.realizarQuery(`
-    UPDATE Usuarios
-    SET puntaje='${req.body.puntaje}'
-    WHERE id='${req.body.id}'
-  `);
-  res.send({ res: "Usuario actualizado" });
+app.delete("/usuariosBorrar", async function (req, res) {
+  try {
+    console.log("TEST:", req.body.usuario);
+    if (req.body.usuario != "") {
+      await realizarQuery(
+        `DELETE FROM Users WHERE usuario='${req.body.usuario}';`
+      );
+      res.send({ res: "Usuario eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del usuario" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
 });
 
 
-//5
-async function llamadoAlDelete() {
-  let datos = {
-    nombre: document.getElementsByName("selectUsuarios")[0].value  // ← [0] obligatorio
-  };
-
-  const response = await fetch("http://localhost:4000/usuariosBorrar", {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datos),
-  });
-
-  let result = await response.json();
-  console.log(result);
-}
-
-
-
-//6
-app.delete('/usuariosBorrar', async function (req, res) {
-  console.log(req.body);
-  await realizarQuery(`
-    DELETE FROM Usuarios WHERE nombre='${req.body.nombre}';
-  `);
-  res.send({ res: "Usuario eliminado" });
-});
-
-
-
-*/
