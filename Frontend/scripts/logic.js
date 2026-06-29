@@ -71,13 +71,59 @@ async function llamadoAlPost(datos) {
 }
 
 
-async function llamadoAlDelete() {
-  //Mando los datos al BACKEND
-  let nombre = document.getElementById("selectEquipos").value;
-  let datos = {
-    nombre_de_equipo: document.getElementById("selectEquipos").value,
-  };}
+// 1. Esta función trae los jugadores del servidor y los mete en el select
+async function cargarJugadoresSelect() {
+  // Pedimos los jugadores al backend
+  const response = await fetch("http://localhost:4000/obtenerJugadores");
+  const jugadores = await response.json();
 
+  let contenido = '<option value="">-- Selecciona un jugador --</option>';
+
+  // Recorremos los jugadores y creamos las opciones
+  jugadores.forEach(function (jugador) {
+    contenido += `<option value="${jugador.nombre_completo}">${jugador.nombre_completo}</option>`;
+  });
+
+  // Guardamos las opciones dentro del select
+  document.getElementById("selectDatoAEliminar").innerHTML = contenido;
+}
+
+// Ejecutamos la función apenas se carga el archivo para que llene el select
+cargarJugadoresSelect();
+
+
+// 2. Esta función se ejecuta al tocar el botón de eliminar
+async function llamadoAlDelete() {
+  // Tomamos el nombre del jugador seleccionado
+  let nombreJugador = document.getElementById("selectDatoAEliminar").value;
+
+  // Si no seleccionó ninguno, le avisamos
+  if (nombreJugador === "") {
+    alert("Por favor, selecciona un jugador.");
+    return;
+  }
+
+  let datos = {
+    nombre_completo: nombreJugador
+  };
+
+  // Enviamos la petición DELETE al servidor
+  const response = await fetch("http://localhost:4000/borrarJugador", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos),
+  });
+
+  let result = await response.json();
+  console.log(result);
+
+  alert("Jugador eliminado con éxito.");
+  
+  // Volvemos a cargar el select para que ya no aparezca el que borramos
+  cargarJugadoresSelect();
+}
 
 /*
 
