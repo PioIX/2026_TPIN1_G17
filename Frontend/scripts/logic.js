@@ -103,7 +103,6 @@ async function llamadoAlDelete() {
     return;
   }
 
-  // Preparamos el dato estructurado igual que en tu llamadoAlPost
   let datos = {
     nombre_completo: nombreJugador
   };
