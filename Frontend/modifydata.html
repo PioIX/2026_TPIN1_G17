@@ -7,34 +7,64 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
+    <div>    
+        <div class="contenedor-general">
+            <h1>Modificar la Cantidad de Partidos de un Jugador</h1>
+            <label>Seleccione el jugador:</label>
+            <select id="selectJugadoresPosicion"></select>
+            <br><br>
+            <label>Nueva cantidad de partidos:</label>
+            <input type="number" id="inputPartidosTotales" placeholder="Ej: 50" />
+            <br><br>
+            <button onclick="llamadoAlPutJugadoresPartidos()">Actualizar Partidos</button>
 
-    <div class="contenedor-general">
-        
-        <h1 class="titulo-pantalla">Modificar Datos</h1>
-
-        <div class="bloque-inputs">
-            
-            <select id="selectTablaModificar" class="input-blanco">
-                <option value="" disabled selected hidden>Tabla a la que desea modificar datos</option>
-                <option value="jugadores">Players</option>
-                <option value="usuarios">Users</option>
-                <option value="partidas">Matches</option>
-            </select>
-            
-            <select id="selectDatoAEditar" class="input-blanco">
-                <option value="" disabled selected hidden>Dato que quiera modificar</option>
-            </select>
-            
-            <input type="text" id="inputNuevoValor" class="input-blanco" placeholder="Dato nuevo">
-            
         </div>
 
-        <div class="bloque-botones">
-            <button id="btnEnviarModificar" class="btn-blanco">MODIFICAR DATO</button>
-            <a href="admin.html"><button id="btnVolverAdminModificar" class="btn-blanco" type="button">VOLVER</button></a>
-        </div>
 
+        <div class="contenedor-general">
+            <h1>Modificar la Posicion en la cancha de un Jugador</h1>
+            <label>Seleccione el jugador:</label>
+            <select id="selectJugadores"></select>
+            <br><br>
+            <label>Nueva posicion en la cancha:</label>
+            <select id="selectPosicion">
+                <option value="Delantero">Delantero</option>
+                <option value="Defensor">Defensor</option>
+                <option value="Arquero">Arquero</option>
+                <option value="Mediocampista">Mediocampista</option>
+            </select>
+            <br><br>
+            <button onclick="llamadoAlPutJugadoresPosicion()">Actualizar Posición</button>
+        </div>
     </div>
+    
+
+
+
+    <div>    
+        <div class="contenedor-general">
+            <h1>Modificar si un Usuario es Admin</h1>
+            <label>Seleccione el usuario:</label>
+            <select id="selectUsuarios"></select>
+            <br><br>
+         
+            <label>Cambiar poder de administrar</label>
+                <select id="inputEsAdmin">
+                    <option value="1">Administrador</option>
+                    <option value="0">No Administrador</option>
+                </select>
+            <br><br>
+            <button onclick="llamadoAlPutUsuariosAdministrador()">Actualizar Administracion</button>
+            <br><br><br><br><br>
+
+            <div class="bloque-botones">
+                <a href="admin.html"><button id="btnVolverAdminModificar" class="btn-blanco" type="button">VOLVER</button></a>
+            </div>
+        </div>
+    </div>
+        
+    
+
 
     <footer class="pie-creditos">
         <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>

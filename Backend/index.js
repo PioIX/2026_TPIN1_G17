@@ -98,11 +98,7 @@ app.post('/login', async function (req, res) {
 
 app.post("/adddata", async function (req, res) {
   try {
-    if (
-      !req.body.nombre_completo ||
-      !req.body.partidos_totales ||
-      !req.body.posicion_en_la_cancha
-    ) {
+    if (!req.body.nombre_completo || !req.body.partidos_totales || !req.body.posicion_en_la_cancha) {
       return res.send({ res: "No pueden haber campos vacíos" });
     }
     const posicionesValidas = [
@@ -179,3 +175,45 @@ app.delete("/usuariosBorrar", async function (req, res) {
 });
 
 
+app.put('/jugadoresActualizarPartidos', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET partidos_totales='${req.body.partidos_totales}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+    `);
+    res.send({ res: "Jugador actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.put('/jugadoresActualizarPosicion', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET posicion_en_la_cancha='${req.body.posicion_en_la_cancha}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+      `);
+      res.send({ res: "Posición actualizada" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.put('/usuariosActualizarAdministrador', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Users SET es_admin='${req.body.es_admin}'
+      WHERE usuario='${req.body.usuario}'
+    `);
+    res.send({ res: "Usuario actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});

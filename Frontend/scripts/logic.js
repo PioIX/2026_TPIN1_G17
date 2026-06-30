@@ -73,21 +73,17 @@ async function llamadoAlPost(datos) {
 }
 
 // FUNCION PARA ELIMINAR JUGADORES
-async function cargarJugadores() {
+async function cargarJugadores(selectId = "selectJugadores") {
     const response = await fetch("http://localhost:4000/jugadores");
     const jugadores = await response.json();
-    console.log(jugadores);
-
     let contenido = "";
-
     jugadores.forEach(function (jugador) {
-      contenido += `<option id="${jugador.nombre_completo}" value="${jugador.nombre_completo}">${jugador.nombre_completo}</option>`;
+      contenido += `<option value="${jugador.nombre_completo}">${jugador.nombre_completo}</option>`;
     });
-    document.getElementById("selectJugadores").innerHTML = contenido;
+    document.getElementById(selectId).innerHTML = contenido;
 }
-if (document.getElementById("selectJugadores")) {
-  cargarJugadores();
-}
+if (document.getElementById("selectJugadores")) cargarJugadores();
+if (document.getElementById("selectJugadoresPosicion")) cargarJugadores("selectJugadoresPosicion");
  
 
 
@@ -162,7 +158,58 @@ async function llamadoAlDeleteUsuarios() {
 }
 
 
+//FUNCION PARA ACTUALIZAR A LSO JUGADORES(Partidos)
+async function llamadoAlPutJugadoresPartidos() {
+  let datos = {
+    nombre_completo: document.getElementById("selectJugadores").value,
+    partidos_totales: document.getElementById("inputPartidosTotales").value,
+  };
+  const response = await fetch("http://localhost:4000/jugadoresActualizarPartidos", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarJugadores()
+}
 
+
+//FUNCION PARA ACTUALIZAR A LSO JUGADORES(Posicion)
+async function llamadoAlPutJugadoresPosicion() {
+  let datos = {
+    nombre_completo: document.getElementById("selectJugadoresPosicion").value,
+    posicion_en_la_cancha: document.getElementById("selectPosicion").value,
+  };
+  const response = await fetch("http://localhost:4000/jugadoresActualizarPosicion", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarJugadores()
+}
+
+
+//FUNCION POARA ACTUALIZAR A LOS USUARIOS
+async function llamadoAlPutUsuariosAdministrador() {
+  let datos = {
+    usuario: document.getElementById("selectUsuarios").value,
+    es_admin: document.getElementById("inputEsAdmin").value,
+  };
+  const response = await fetch("http://localhost:4000/usuariosActualizarAdministrador", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarUsuarios()
+}
 
 
 
