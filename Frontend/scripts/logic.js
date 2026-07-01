@@ -232,3 +232,53 @@ async function llamadoAlPutUsuariosAdministrador() {
 /*
 vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
 */
+
+
+// Variables globales para recordar en qué jugador estamos parados
+let jugadorIzquierdaActual = {};
+let jugadorDerechaActual = {};
+
+async function avanzarSiguienteRonda() {
+    try {
+        // 1. Buscamos los elementos del DOM (las tarjetas de los jugadores)
+        let tarjetaIzq = document.getElementById("tarjetaJugadorIzq");
+        let tarjetaDer = document.getElementById("tarjetaJugadorDer");
+
+        // 2. Activamos la animación de CSS: el de la derecha se mueve a la izquierda
+        tarjetaDer.classList.add("desplazar-izquierda");
+
+        // 3. Esperamos 500ms (0.5s) a que termine el movimiento físico antes de cambiar los datos
+        await new Promise(function(resolve) {
+            setTimeout(resolve, 500);
+        });
+
+        // 4. El jugador que estaba a la derecha pasa a ser el de la izquierda
+        jugadorIzquierdaActual = jugadorDerechaActual;
+
+        // 5. Hacemos el pedido Fetch al Backend para traer un nuevo jugador al azar
+        const response = await fetch('http://localhost:4000/juego/nuevo-rival');
+        const datos = await response.json(); // Abrimos el paquete traducido
+        
+        jugadorDerechaActual = datos.nuevoJugador;
+
+        document.getElementById("nombreJugadorIzq").innerText = jugadorIzquierdaActual.nombre;
+        document.getElementById("fotoJugadorIzq").src = jugadorIzquierdaActual.foto;
+        document.getElementById("datoJugadorIzq").innerText = jugadorIzquierdaActual.partidos; // El dato que ya se conoce
+
+                document.getElementById("nombreJugadorDer").innerText = jugadorDerechaActual.nombre;
+        document.getElementById("fotoJugadorDer").src = jugadorDerechaActual.foto;
+        
+        
+        tarjetaDer.classList.remove("desplazar-izquierda");
+        tarjetaDer.classList.add("aparecer-suave");
+
+        
+        setTimeout(function() {
+            tarjetaDer.classList.remove("aparecer-suave");
+        }, 500);
+
+    } catch (error) {
+        
+        console.error(error);
+    }
+}
