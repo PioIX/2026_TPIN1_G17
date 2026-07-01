@@ -270,7 +270,7 @@ async function avanzarSiguienteRonda() {
         
         
         tarjetaDer.classList.remove("desplazar_izquierda");
-        tarjetaDer.classList.add("aparecer-suave");
+        tarjetaDer.classList.add("aparecer_suave");
 
         
         setTimeout(function() {
