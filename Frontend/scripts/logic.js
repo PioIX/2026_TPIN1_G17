@@ -269,8 +269,8 @@ async function avanzarSiguienteRonda() {
         document.getElementById("fotoJugadorDer").src = jugadorDerechaActual.foto;
         
         
-        tarjetaDer.classList.remove("desplazar_izquierda");
-        tarjetaDer.classList.add("aparecer_suave");
+        tarjetaDer.classList.remove("desplazar-izquierda");
+        tarjetaDer.classList.add("aparecer-suave");
 
         
         setTimeout(function() {
