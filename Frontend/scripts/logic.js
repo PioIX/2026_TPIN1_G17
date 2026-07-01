@@ -213,20 +213,72 @@ async function llamadoAlPutUsuariosAdministrador() {
 
 
 
+/*
+let jugadorActual = null;   // el de la izquierda, ya "revelado"
+let jugadorSiguiente = null; // el de la derecha, el que hay que adivinar
+let listaJugadores = [];
+let indiceSiguiente = 0;
+let puntaje = 0;
+
+async function iniciarJuego() {
+  const response = await fetch("http://localhost:4000/jugadores");
+  listaJugadores = await response.json();
+  // mezclamos
+  listaJugadores.sort(() => Math.random() - 0.5);
+
+  jugadorActual = listaJugadores[0];
+  jugadorSiguiente = listaJugadores[1];
+  indiceSiguiente = 2;
+
+  mostrarJugador(jugadorActual, "img-izquierda", "nombre-izquierda");
+  mostrarJugador(jugadorSiguiente, "img-derecha", "nombre-derecha");
+}
+
+async function jugar(respuesta) {
+  if (!jugadorActual || !jugadorSiguiente) {
+    console.warn("Todavía no hay jugadores cargados");
+    return;
+  }
+  // ... resto igual
+  const response = await fetch("http://localhost:4000/jugarComparar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  const resultado = await response.json();
+
+  if (resultado.correcto) {
+    puntaje++;
+    document.getElementById("valor-puntaje-actual").textContent = puntaje;
+
+    // el de la derecha pasa a ser el nuevo "actual", y sacamos otro jugador nuevo
+    jugadorActual = jugadorSiguiente;
+    mostrarJugador(jugadorActual, "img-izquierda", "nombre-izquierda");
+
+    if (indiceSiguiente >= listaJugadores.length) {
+      // se acabaron los jugadores, reiniciamos la lista mezclada
+      listaJugadores.sort(() => Math.random() - 0.5);
+      indiceSiguiente = 0;
+    }
+    jugadorSiguiente = listaJugadores[indiceSiguiente];
+    indiceSiguiente++;
+    mostrarJugador(jugadorSiguiente, "img-derecha", "nombre-derecha");
+  } else {
+    alert(`Perdiste! Tu puntaje final fue ${puntaje}`);
+    puntaje = 0;
+    document.getElementById("valor-puntaje-actual").textContent = puntaje;
+    iniciarJuego();
+  }
+}
+
+if (document.getElementById("img-izquierda")) {
+  iniciarJuego();
+}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 /*
