@@ -218,38 +218,3 @@ app.put('/usuariosActualizarAdministrador', async function (req, res) {
   }
 });
 
-
-/*
-app.post('/jugarComparar', async function (req, res) {
-  try {
-    const { nombreIzquierda, nombreDerecha, respuesta } = req.body;
-    // respuesta esperada: "mayor" o "menor"
-
-    let jugadorIzq = await realizarQuery(
-      `SELECT nombre_completo, partidos_totales FROM Players WHERE nombre_completo='${nombreIzquierda}'`
-    );
-    let jugadorDer = await realizarQuery(
-      `SELECT nombre_completo, partidos_totales FROM Players WHERE nombre_completo='${nombreDerecha}'`
-    );
-
-    if (jugadorIzq.length === 0 || jugadorDer.length === 0) {
-      return res.status(400).send({ res: "Jugador no encontrado" });
-    }
-
-    const partidosIzq = Number(jugadorIzq[0].partidos_totales);
-    const partidosDer = Number(jugadorDer[0].partidos_totales);
-
-    const respuestaCorrecta = partidosDer > partidosIzq ? "mayor" : "menor";
-    const correcto = respuesta === respuestaCorrecta;
-
-    res.send({
-      correcto,
-      partidosIzquierda: partidosIzq,
-      partidosDerecha: partidosDer,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ res: "Error del servidor" });
-  }
-});
-*/
