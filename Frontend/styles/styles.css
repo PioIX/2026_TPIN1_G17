@@ -206,3 +206,80 @@ main {
 #pregunta {
     color:white
 }
+
+
+#contenedor-juego {
+    width: 100%;
+    max-width: none;
+    position: relative;
+    padding: 0;
+    gap: 0;
+}
+
+#jugadores {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.jugador-izquierda,
+.jugador-derecha {
+    position: relative;
+    flex: 1 1 50%;
+    height: 75vh;
+    overflow: hidden;
+}
+
+.jugador-izquierda img,
+.jugador-derecha img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.jugador-izquierda p,
+.jugador-derecha p {
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #000000;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+
+#puntaje-actual {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    color: #222;
+    font-weight: 800;
+    padding: 16px 30px;
+    border-radius: 50px;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.botones-comparar {
+    position: absolute;
+    right: 6%;
+    top: 60%;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0;
+    z-index: 10;
+}
+
+.botones-comparar button {
+    padding: 14px 40px;
+}
