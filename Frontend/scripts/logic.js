@@ -34,7 +34,8 @@ async function loginUsuario() {
 
   if (resultado.res === "Login correcto" ) {
     alert(`Bienvenido ${resultado.usuario.usuario}`);
-    localStorage.setItem("es_admin", resultado.usuario.es_admin);
+      localStorage.setItem("es_admin", resultado.usuario.es_admin);
+      localStorage.setItem("usuario_logueado", resultado.usuario.usuario);
     window.location.href = "mainmenu.html";
   } else {
     alert(resultado.res);
@@ -231,3 +232,101 @@ async function nombreJugadores(nombre_completo) {
 /*
 vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
 */
+
+// --- LÓGICA DEL JUEGO CON INTEGRACIÓN DE NOMBRE, FOTO Y PARTIDOS ---
+
+let listaJugadores = [];       // Mazo completo desde el BACKEND
+let nombresJugados = [];       // Array de control para no repetir
+let jugadorIzquierda = null;
+let jugadorDerecha = null;
+let puntajeActual = 0;
+
+async function iniciarJuego() {
+  try {
+    const response = await fetch("http://localhost:4000/jugadores"); //
+    listaJugadores = await response.json();
+
+    if (listaJugadores.length < 2) {
+      alert("Necesitas al menos 2 jugadores en la base de datos para jugar.");
+      return;
+    }
+
+    reiniciarPartida();
+  } catch (error) {
+    console.error("Error al iniciar el juego:", error);
+  }
+}
+
+function reiniciarPartida() {
+  puntajeActual = 0;
+  actualizarPuntajePantalla();
+  nombresJugados = []; 
+
+  let indice = Math.floor(Math.random() * listaJugadores.length);
+  jugadorIzquierda = listaJugadores[indice];
+  nombresJugados.push(jugadorIzquierda.nombre_completo);
+
+  seleccionarSiguienteRetador();
+}
+
+function seleccionarSiguienteRetador() {
+  if (nombresJugados.length === listaJugadores.length) {
+    alert("¡Felicidades! Completaste todos los jugadores del mazo.");
+    reiniciarPartida();
+    return;
+  }
+
+  let encontrado = false;
+  while (encontrado === false) {
+    let indiceAleatorio = Math.floor(Math.random() * listaJugadores.length);
+    let candidato = listaJugadores[indiceAleatorio];
+
+    if (nombresJugados.includes(candidato.nombre_completo) === false) {
+      jugadorDerecha = candidato;
+      nombresJugados.push(jugadorDerecha.nombre_completo); 
+      encontrado = true; 
+    }
+  }
+
+  // LLAMADO AL DOM: Al de la izquierda le pasamos 'true' para ver sus partidos. Al de la derecha 'false'.
+  mostrarJugadorEnPantalla(jugadorIzquierda, "img-izquierda", "nombre-izquierda", true); //
+  mostrarJugadorEnPantalla(jugadorDerecha, "img-derecha", "nombre-derecha", false); //
+}
+
+function jugar(eleccion) { //
+  const partidosIzquierda = parseInt(jugadorIzquierda.partidos_totales);
+  const partidosDerecha = parseInt(jugadorDerecha.partidos_totales);
+
+  let gano = false;
+
+  if (eleccion === 'mayor') { //
+    gano = (partidosDerecha >= partidosIzquierda);
+  } else if (eleccion === 'menor') { //
+    gano = (partidosDerecha <= partidosIzquierda);
+  }
+
+  if (gano) {
+    
+    puntajeActual++;
+    actualizarPuntajePantalla();
+    
+    // El retador pasa a la izquierda
+    jugadorIzquierda = jugadorDerecha;
+    seleccionarSiguienteRetador();
+} else {
+    alert(`¡Perdiste! ${jugadorDerecha.nombre_completo} tenía ${partidosDerecha} partidos y ${jugadorIzquierda.nombre_completo} tenía ${partidosIzquierda}.`);
+    
+    guardarPuntajeEnServidor(puntajeActual); 
+    
+    
+    return;
+  }
+}
+
+function actualizarPuntajePantalla() {
+  document.getElementById("valor-puntaje-actual").textContent = puntajeActual; //
+}
+
+if (document.getElementById("contenedor-juego")) { //
+  iniciarJuego();
+}

@@ -218,3 +218,26 @@ app.put('/usuariosActualizarAdministrador', async function (req, res) {
   }
 });
 
+
+
+app.put('/actualizarRecord', async function (req, res) {
+    try {
+      let datosUsuario = await realizarQuery(`SELECT record_maximo FROM Users WHERE usuario='${req.body.usuario}'`);
+      
+      if (datosUsuario.length > 0) {
+        let recordActual = datosUsuario[0].record_maximo;
+        let nuevoPuntaje = parseInt(req.body.puntaje);
+  
+        if (nuevoPuntaje > recordActual) {
+          await realizarQuery(`UPDATE Users SET record_maximo=${nuevoPuntaje} WHERE usuario='${req.body.usuario}'`);
+          return res.send({ res: "¡Nuevo récord guardado!", nuevoRecord: true });
+        }
+      }
+      res.send({ res: "No superó el récord", nuevoRecord: false });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ res: "Error del servidor" });
+    }
+  });
+
+
