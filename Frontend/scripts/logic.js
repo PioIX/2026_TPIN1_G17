@@ -1,3 +1,4 @@
+// REGISTER
 async function registrarUsuario() {
   const usuario = document.getElementById("inputUsuario").value;
   const contrasena = document.getElementById("inputContrasena").value;
@@ -18,6 +19,7 @@ async function registrarUsuario() {
   }
 }
 
+// LOGIN
 async function loginUsuario() {
   const usuario = document.getElementById("inputUsuario").value;
   const contrasena = document.getElementById("inputContrasena").value;
@@ -30,8 +32,9 @@ async function loginUsuario() {
   const resultado = await response.json();
   console.log(resultado);
 
-  if (resultado.res === "Login correcto") {
+  if (resultado.res === "Login correcto" ) {
     alert(`Bienvenido ${resultado.usuario.usuario}`);
+    localStorage.setItem("es_admin", resultado.usuario.es_admin);
     window.location.href = "mainmenu.html";
   } else {
     alert(resultado.res);
@@ -40,8 +43,7 @@ async function loginUsuario() {
 
 
 
-
-// 1
+// FUNCION PARA AGREGAR JUGADORES
 function tomarDatos() {
   let datos = {
     nombre_completo: getNombreCompleto(),
@@ -70,89 +72,31 @@ async function llamadoAlPost(datos) {
   console.log(result);
 }
 
-
-// 1. Esta función trae los jugadores del servidor y los mete en el select
-async function cargarJugadoresSelect() {
-  // Pedimos los jugadores al backend
-  const response = await fetch("http://localhost:4000/obtenerJugadores");
-  const jugadores = await response.json();
-
-  let contenido = '<option value="">-- Selecciona un jugador --</option>';
-
-  // Recorremos los jugadores y creamos las opciones
-  jugadores.forEach(function (jugador) {
-    contenido += `<option value="${jugador.nombre_completo}">${jugador.nombre_completo}</option>`;
-  });
-
-  // Guardamos las opciones dentro del select
-  document.getElementById("selectDatoAEliminar").innerHTML = contenido;
+// FUNCION PARA ELIMINAR JUGADORES
+async function cargarJugadores(selectId = "selectJugadores") {
+    const response = await fetch("http://localhost:4000/jugadores");
+    const jugadores = await response.json();
+    let contenido = "";
+    jugadores.forEach(function (jugador) {
+      contenido += `<option value="${jugador.nombre_completo}">${jugador.nombre_completo}</option>`;
+    });
+    document.getElementById(selectId).innerHTML = contenido;
 }
-
-// Ejecutamos la función apenas se carga el archivo para que llene el select
-cargarJugadoresSelect();
-
-
-// 2. Esta función se ejecuta al tocar el botón de eliminar
-async function llamadoAlDelete() {
-  // Tomamos el nombre del jugador seleccionado
-  let nombreJugador = document.getElementById("selectDatoAEliminar").value;
-
-  // Si no seleccionó ninguno, le avisamos
-  if (nombreJugador === "") {
-    alert("Por favor, selecciona un jugador.");
-    return;
-  }
-
-  let datos = {
-    nombre_completo: nombreJugador
-  };
-
-  // Enviamos la petición DELETE al servidor
-  const response = await fetch("http://localhost:4000/borrarJugador", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(datos),
-  });
-
-  let result = await response.json();
-  console.log(result);
-
-  alert("Jugador eliminado con éxito.");
-  
-  // Volvemos a cargar el select para que ya no aparezca el que borramos
-  cargarJugadoresSelect();
-}
-
-/*
+if (document.getElementById("selectJugadores")) cargarJugadores();
+if (document.getElementById("selectJugadoresPosicion")) cargarJugadores("selectJugadoresPosicion");
+ 
 
 
-
-async function cargarEquipos() {
-  const response = await fetch("http://localhost:4000/");
-  const equipos = await response.json();
-  console.log(equipos);
-
-  let contenido = "";
-
-  equipos.forEach(function (equipo) {
-    contenido += `<option id="${equipo.nombre_de_equipo}" value="${equipo.nombre_de_equipo}">${equipo.nombre_de_equipo}</option>`;
-  });
-  document.getElementById("selectEquipos").innerHTML = contenido;
-}
-cargarEquipos();
-
-async function llamadoAlDelete() {
+async function llamadoAlDeleteJugadores() {
   //Mando los datos al BACKEND
   //   let nombre = document.getElementById("selectEquipos").value;
 
   let datos = {
-    nombre_de_equipo: document.getElementById("selectEquipos").value,
+    nombre_completo: document.getElementById("selectJugadores").value,
   };
 
   console.log("Datos: ", datos);
-  const response = await fetch("http://localhost:4000/equiposBorrar", {
+  const response = await fetch("http://localhost:4000/jugadoresBorrar", {
     method: "DELETE", //GET, POST, PUT o DELETE
     headers: {
       //Va siempre igual, le aclaro que la informacion va a viajar como JSON
@@ -160,15 +104,130 @@ async function llamadoAlDelete() {
     },
     body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
   });
-  // --Me quedo esperando--
-
-  //En response tengo la respuesta del BACKEND
+    // --Me quedo esperando--
+  
+    //En response tengo la respuesta del BACKEND
     let result = await response.json();
     console.log(result)
-  cargarEquipos();
+  cargarJugadores();
 }
-*/
 
+
+// FUNCION PARA ELIMINAR USUARIOS
+async function cargarUsuarios() {
+    const response = await fetch("http://localhost:4000/usuarios");
+    const usuarios = await response.json();
+    console.log(usuarios);
+
+    let contenido = "";
+
+    usuarios.forEach(function (usuario) {
+      contenido += `<option id="${usuario.usuario}" value="${usuario.usuario}">${usuario.usuario}</option>`;
+    });
+    document.getElementById("selectUsuarios").innerHTML = contenido;
+}
+if (document.getElementById("selectUsuarios")) {
+  cargarUsuarios();
+}
+
+
+
+
+async function llamadoAlDeleteUsuarios() {
+  //Mando los datos al BACKEND
+  //   let nombre = document.getElementById("selectEquipos").value;
+
+  let datos = {
+    usuario: document.getElementById("selectUsuarios").value,
+  };
+
+  console.log("Datos: ", datos);
+  const response = await fetch("http://localhost:4000/usuariosBorrar", {
+    method: "DELETE", //GET, POST, PUT o DELETE
+    headers: {
+      //Va siempre igual, le aclaro que la informacion va a viajar como JSON
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos), //JSON.stringify convierte de objeto a JSON
+  });
+    // --Me quedo esperando--
+  
+    //En response tengo la respuesta del BACKEND
+    let result = await response.json();
+    console.log(result)
+  cargarUsuarios();
+}
+
+
+//FUNCION PARA ACTUALIZAR A LSO JUGADORES(Partidos)
+async function llamadoAlPutJugadoresPartidos() {
+  let datos = {
+    nombre_completo: document.getElementById("selectJugadores").value,
+    partidos_totales: document.getElementById("inputPartidosTotales").value,
+  };
+  const response = await fetch("http://localhost:4000/jugadoresActualizarPartidos", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarJugadores()
+}
+
+
+//FUNCION PARA ACTUALIZAR A LSO JUGADORES(Posicion)
+async function llamadoAlPutJugadoresPosicion() {
+  let datos = {
+    nombre_completo: document.getElementById("selectJugadoresPosicion").value,
+    posicion_en_la_cancha: document.getElementById("selectPosicion").value,
+  };
+  const response = await fetch("http://localhost:4000/jugadoresActualizarPosicion", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarJugadores()
+}
+
+
+//FUNCION POARA ACTUALIZAR A LOS USUARIOS
+async function llamadoAlPutUsuariosAdministrador() {
+  let datos = {
+    usuario: document.getElementById("selectUsuarios").value,
+    es_admin: document.getElementById("inputEsAdmin").value,
+  };
+  const response = await fetch("http://localhost:4000/usuariosActualizarAdministrador", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+  cargarUsuarios()
+}
+/*
+async function nombreJugadores(nombre_completo) {
+  let datos = {
+    nombre_completo: document.getElementById("selectUsuarios").value,
+    
+  };
+  const response = await fetch("http://localhost:4000/jugadoresCargar", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(nombre_completo),
+  });
+  let result = await response.json();
+  console.log(result);
+  alert(result.res);
+}
+
+*/
 /*
 vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
 */

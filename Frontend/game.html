@@ -16,20 +16,20 @@
                 <p id="puntaje-actual">PUNTAJE ACTUAL: <span id="valor-puntaje-actual">0</span></p>
 
                 <div id="jugadores">
-                    <article class="jugador" id="jugador-izquierda">
+                    <div class="jugador-izquierda">
                         <img id="img-izquierda" src="" alt="">
-                        <h2 id="nombre-izquierda"></h2>
-                        <p id="partidos-izquierda"></p>
-                    </article>
+                        <p id="nombre-izquierda">...</p>
+                    </div>
 
-                    <article class="jugador" id="jugador-derecha">
+                    <div class="jugador-derecha">
                         <img id="img-derecha" src="" alt="">
-                        <h2 id="nombre-derecha"></h2>
-                        <div class="bloque-botones botones-comparar">
-                            <button type="button" id="btn-mas-partidos" class="btn-blanco">MAS PARTIDOS</button>
-                            <button type="button" id="btn-menos-partidos" class="btn-blanco">MENOS PARTIDOS</button>
-                        </div>
-                    </article>
+                        <p id="nombre-derecha">...</p>
+                    </div>
+
+                    <div class="bloque-botones botones-comparar">
+                        <button type="button" id="btn-mas-partidos" class="btn-blanco" onclick="jugar('mayor')">MAS PARTIDOS</button>
+                        <button type="button" id="btn-menos-partidos" class="btn-blanco" onclick="jugar('menor')">MENOS PARTIDOS</button>
+                    </div>
                 </div>
             </section>
 
@@ -39,7 +39,7 @@
             </footer>
         </main>
 
-        <script src="scripts/logic.js"></script>
         <script src="scripts/dom.js"></script>
+        <script src="scripts/logic.js"></script>
     </body>
 </html>

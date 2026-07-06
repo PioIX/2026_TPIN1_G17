@@ -30,21 +30,44 @@ app.get("/", function (req, res) {
 // 2
 const MySQL = require("./modulos/mysql.js");
 
+app.get("/jugadores", async function (req, res) {
+  try {
+    let jugadores = await realizarQuery(`SELECT * FROM Players`);
+    res.send(jugadores);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.get("/usuarios", async function (req, res) {
+  try {
+    let usuarios = await realizarQuery(`SELECT usuario FROM Users`);
+    res.send(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
 app.post('/register', async function (req, res) {
-    try {
-    console.log(req.body)
-    let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
-    console.log(req.body)
-    if (usuarioExistente.length > 0) {
-      res.send({res:"Ya existe este usuario"});
-    }
-    else {
-      realizarQuery(`
-        INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
-        ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
-      res.send({res:"Usuario agregado"})
-    }
-    
+  try {
+  console.log(req.body)
+  let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
+  console.log(req.body)
+  if (usuarioExistente.length > 0) {
+    res.send({res:"Ya existe este usuario"});
+  }
+  else {
+    realizarQuery(`
+      INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
+      ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
+    res.send({res:"Usuario agregado"})
+  }
+  
   } catch (error) {
     console.error("Error al borrar:", error);
     res.status(500).send({ 
@@ -52,7 +75,6 @@ app.post('/register', async function (req, res) {
     });
   }
 })
-
 
 
 
@@ -76,11 +98,7 @@ app.post('/login', async function (req, res) {
 
 app.post("/adddata", async function (req, res) {
   try {
-    if (
-      !req.body.nombre_completo ||
-      !req.body.partidos_totales ||
-      !req.body.posicion_en_la_cancha
-    ) {
+    if (!req.body.nombre_completo || !req.body.partidos_totales || !req.body.posicion_en_la_cancha) {
       return res.send({ res: "No pueden haber campos vacíos" });
     }
     const posicionesValidas = [
@@ -115,79 +133,88 @@ app.post("/adddata", async function (req, res) {
 });
 
 
-/*
 
 
+app.delete("/jugadoresBorrar", async function (req, res) {
+  try {
+    console.log("TEST:", req.body.nombre_completo);
+    if (req.body.nombre_completo != "") {
+      await realizarQuery(
+        `DELETE FROM Players WHERE nombre_completo='${req.body.nombre_completo}';`
+      );
+      res.send({ res: "Jugador eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del jugador" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
+});
+  
 
-
-async function envioUsuario(datos) {
-    const nombre = document.getElementById("name").value; 
-
-    const response = await fetch('http://localhost:4000/login', {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datos) //JSON.stringify convierte de objeto a JSON
-    })
-
-
-    console.log(response)
-    //Desarma el json y lo arma como un objeto
-    let result = await response.json()
-    console.log(result)
-}
-
-
-
-
-//3
-
-
-//4 
-let datos = {
-  id: document.getElementById("selectUsuarios").value,
-  puntaje: document.getElementById("inputPuntaje").value
-};
-
-app.put('/usuariosActualizar', async function (req, res) {
-  console.log(req.body);
-  await MySQL.realizarQuery(`
-    UPDATE Usuarios
-    SET puntaje='${req.body.puntaje}'
-    WHERE id='${req.body.id}'
-  `);
-  res.send({ res: "Usuario actualizado" });
+app.delete("/usuariosBorrar", async function (req, res) {
+  try {
+    console.log("TEST:", req.body.usuario);
+    if (req.body.usuario != "") {
+      await realizarQuery(
+        `DELETE FROM Users WHERE usuario='${req.body.usuario}';`
+      );
+      res.send({ res: "Usuario eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del usuario" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
 });
 
 
-//5
-async function llamadoAlDelete() {
-  let datos = {
-    nombre: document.getElementsByName("selectUsuarios")[0].value  // ← [0] obligatorio
-  };
-
-  const response = await fetch("http://localhost:4000/usuariosBorrar", {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datos),
-  });
-
-  let result = await response.json();
-  console.log(result);
-}
-
-
-
-//6
-app.delete('/usuariosBorrar', async function (req, res) {
-  console.log(req.body);
-  await realizarQuery(`
-    DELETE FROM Usuarios WHERE nombre='${req.body.nombre}';
-  `);
-  res.send({ res: "Usuario eliminado" });
+app.put('/jugadoresActualizarPartidos', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET partidos_totales='${req.body.partidos_totales}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+    `);
+    res.send({ res: "Jugador actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
 });
 
 
 
-*/
+app.put('/jugadoresActualizarPosicion', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET posicion_en_la_cancha='${req.body.posicion_en_la_cancha}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+      `);
+      res.send({ res: "Posición actualizada" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.put('/usuariosActualizarAdministrador', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Users SET es_admin='${req.body.es_admin}'
+      WHERE usuario='${req.body.usuario}'
+    `);
+    res.send({ res: "Usuario actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+

@@ -9,27 +9,41 @@
 <body>
 
     <div class="contenedor-general">
-        
-        <h1 class="titulo-pantalla">Eliminar Datos</h1>
+        <section>
+            <h1 class="titulo-pantalla">Eliminar Datos</h1>
+            <div class="bloque-inputs">
+                
+                <h1>Eliminar Jugador</h1>
+                <label>Elija el jugador que desea eliminar </label>
+                <select id="selectJugadores">
+                </select>
+                <br><br>
+                
+            </div>
+            <div class="bloque-botones">
+                <button onclick="llamadoAlDeleteJugadores()" id="btnEnviarEliminar" class="btn-blanco">ELIMINAR JUGADOR</button>
+                <a href="admin.html"><button id="btnVolverAdminEliminar" class="btn-blanco" type="button">VOLVER</button></a>
+            </div>
+        </section>
 
-        <div class="bloque-inputs">
-            
-            <select id="selectTablaEliminar" class="input-blanco">
-                <option value="" disabled selected hidden>Tabla a la que desea eliminar datos</option>
-                <option value="jugadores">Jugadores de la Scaloneta</option>
-                <option value="usuarios">Usuarios del Sistema</option>
-            </select>
-            
-            <select id="selectDatoAEliminar" class="input-blanco">
-                <option value="" disabled selected hidden>Dato que quiera eliminar</option>
-            </select>
-            
-        </div>
 
-        <div class="bloque-botones">
-            <button id="btnEnviarEliminar" class="btn-blanco">ELIMINAR DATO</button>
-            <a href="admin.html"><button id="btnVolverAdminEliminar" class="btn-blanco" type="button">VOLVER</button></a>
-        </div>
+
+        <section>
+            <div class="bloque-inputs">
+                
+                <h1>Eliminar Usuario</h1>
+                <label>Elija el usuario que desea eliminar </label>
+                <select id="selectUsuarios">
+                </select>
+                <br><br>
+                
+            </div>
+            <div class="bloque-botones">
+                <button onclick="llamadoAlDeleteUsuarios()" id="btnEnviarEliminar" class="btn-blanco">ELIMINAR USUARIO</button>
+                <a href="admin.html"><button id="btnVolverAdminEliminar" class="btn-blanco" type="button">VOLVER</button></a>
+            </div>
+
+        </section>
 
     </div>
 
