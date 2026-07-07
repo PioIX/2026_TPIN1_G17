@@ -346,3 +346,56 @@ function actualizarPuntajePantalla() {
 if (document.getElementById("contenedor-juego")) { //
   iniciarJuego();
 }
+
+
+// ESTADÍSTICAS DEL USUARIO
+async function cargarStats() {
+  const usuario = localStorage.getItem("usuario_logueado");
+
+  if (!usuario) {
+    console.warn("No hay usuario logueado.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:4000/datosUsuario?usuario=${usuario}`);
+    const datos = await response.json();
+
+    document.getElementById("infoMejorPuntaje").textContent = `MEJOR PUNTAJE: ${datos.record_maximo}`;
+  } catch (error) {
+    console.error("Error al cargar estadísticas:", error);
+  }
+}
+if (document.getElementById("infoMejorPuntaje")) {
+  cargarStats();
+}
+
+
+
+
+
+// RANKING GLOBAL
+async function cargarRanking() {
+  try {
+    const response = await fetch("http://localhost:4000/ranking");
+    const ranking = await response.json();
+
+    
+    for (let i = 0; i < 5; i++) {
+      const elemento = document.getElementById(`jugador${i + 1}`);
+      if (!elemento) continue;
+
+      if (ranking[i]) {
+        elemento.textContent = `${ranking[i].usuario} - ${ranking[i].record_maximo} puntos`;
+      } else {
+        elemento.textContent = "---";
+      }
+    }
+  } catch (error) {
+    console.error("Error al cargar el ranking:", error);
+  }
+}
+
+if (document.getElementById("listaRanking")) {
+  cargarRanking();
+}
