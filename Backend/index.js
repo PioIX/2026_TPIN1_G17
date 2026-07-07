@@ -204,7 +204,6 @@ app.put('/jugadoresActualizarPosicion', async function (req, res) {
 });
 
 
-
 app.put('/usuariosActualizarAdministrador', async function (req, res) {
   try {
     await realizarQuery(`
@@ -220,13 +219,16 @@ app.put('/usuariosActualizarAdministrador', async function (req, res) {
 
 
 
+
+
+
 app.put('/actualizarRecord', async function (req, res) {
     try {
       let datosUsuario = await realizarQuery(`SELECT record_maximo FROM Users WHERE usuario='${req.body.usuario}'`);
       
       if (datosUsuario.length > 0) {
         let recordActual = datosUsuario[0].record_maximo;
-        let nuevoPuntaje = parseInt(req.body.puntaje);
+        let nuevoPuntaje = parseInt(req.body.puntaje); //el parseint es para que tire si o si numero
   
         if (nuevoPuntaje > recordActual) {
           await realizarQuery(`UPDATE Users SET record_maximo=${nuevoPuntaje} WHERE usuario='${req.body.usuario}'`);
@@ -241,3 +243,31 @@ app.put('/actualizarRecord', async function (req, res) {
   });
 
 
+app.get("/datosUsuario", async function (req, res) {
+  try {
+    let datos = await realizarQuery(
+      `SELECT usuario, record_maximo FROM Users WHERE usuario='${req.query.usuario}'`
+    );
+    if (datos.length > 0) {
+      res.send(datos[0]);
+    } else {
+      res.status(404).send({ res: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.get("/ranking", async function (req, res) {
+  try {
+    let ranking = await realizarQuery(
+      `SELECT usuario, record_maximo FROM Users ORDER BY record_maximo DESC LIMIT 5`
+    );
+    res.send(ranking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});

@@ -31,45 +31,34 @@ function mostrarJugador(jugador, ladoImg, ladoNombre) {
 }
  */
 
-
-
-function getNombreCompleto() {
-  return document.getElementById("ingresoJugadorNuevo").value; //
+function nombreAArchivo(nombreCompleto) {
+  return nombreCompleto
+    .normalize("NFD")
+    .replace(/[\u0300\u0301\u0308]/g, "") // saca acento grave, agudo y diéresis (á é í ó ú ü) - NO toca la ñ
+    .normalize("NFC")                     // recompone la ñ (n + virgulilla) en un solo carácter otra vez
+    .replace(/\s+/g, "");                 // saca espacios
 }
 
-function getPartidosTotales() {
-  return document.getElementById("ingresoCantidadDePartidos").value; //
-}
 
-function getPosicionEnLaCancha() {
-  return document.getElementById("ingresoPosicionEnLaCancha").value; //
-}
 
-// NUEVA FUNCIÓN COMPLETA PARA MOSTRAR JUGADOR, FOTO Y PARTIDOS
-function mostrarJugadorEnPantalla(
-  jugador,
-  ladoImg,
-  ladoNombre,
-  mostrarPartidos = false
-) {
+
+function mostrarJugadorEnPantalla(jugador, ladoImg, ladoNombre, mostrarPartidos = false) {
   const img = document.getElementById(ladoImg);
   const nombreTxt = document.getElementById(ladoNombre);
 
-  // Quitamos espacios para armar la ruta de la imagen
-  let sinEspacios = jugador.nombre_completo.replace(/\s+/g, "");
-  img.src = `public/${sinEspacios}.jpg`;
+  let nombreArchivo = nombreAArchivo(jugador.nombre_completo);
+  img.src = `public/${nombreArchivo}.jpg`;
   img.alt = jugador.nombre_completo;
 
-  // Si mostrarPartidos es true (para el jugador de la izquierda), pegamos los partidos al nombre
   if (mostrarPartidos === true) {
     nombreTxt.textContent = `${jugador.nombre_completo} (${jugador.partidos_totales} partidos)`;
   } else {
-    // Para el jugador de la derecha ocultamos los partidos, ya que el usuario los tiene que adivinar
     nombreTxt.textContent = jugador.nombre_completo;
   }
 
-  // Por si llega a faltar alguna foto en tu carpeta public
   img.onerror = function () {
     img.src = "public/default.jpg";
   };
 }
+
+

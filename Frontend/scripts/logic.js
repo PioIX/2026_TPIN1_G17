@@ -212,31 +212,15 @@ async function llamadoAlPutUsuariosAdministrador() {
   alert(result.res);
   cargarUsuarios()
 }
-/*
-async function nombreJugadores(nombre_completo) {
-  let datos = {
-    nombre_completo: document.getElementById("selectUsuarios").value,
-    
-  };
-  const response = await fetch("http://localhost:4000/jugadoresCargar", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(nombre_completo),
-  });
-  let result = await response.json();
-  console.log(result);
-  alert(result.res);
-}
 
-*/
-/*
-vector_images = ["public/AcuñaMarcos","public/AgueroSergio","public/AlarioLucas",""];
-*/
+
+
+
 
 // --- LÓGICA DEL JUEGO CON INTEGRACIÓN DE NOMBRE, FOTO Y PARTIDOS ---
 
-let listaJugadores = [];       // Mazo completo desde el BACKEND
-let nombresJugados = [];       // Array de control para no repetir
+let listaJugadores = [];
+let nombresJugados = [];
 let jugadorIzquierda = null;
 let jugadorDerecha = null;
 let puntajeActual = 0;
@@ -246,11 +230,6 @@ async function iniciarJuego() {
     const response = await fetch("http://localhost:4000/jugadores"); //
     listaJugadores = await response.json();
 
-    if (listaJugadores.length < 2) {
-      alert("Necesitas al menos 2 jugadores en la base de datos para jugar.");
-      return;
-    }
-
     reiniciarPartida();
   } catch (error) {
     console.error("Error al iniciar el juego:", error);
@@ -258,9 +237,13 @@ async function iniciarJuego() {
 }
 
 function reiniciarPartida() {
+  juegoTerminado = false; 
+  document.getElementById("btn-mas-partidos").disabled = false;
+  document.getElementById("btn-menos-partidos").disabled = false;
+
   puntajeActual = 0;
   actualizarPuntajePantalla();
-  nombresJugados = []; 
+  nombresJugados = [];
 
   let indice = Math.floor(Math.random() * listaJugadores.length);
   jugadorIzquierda = listaJugadores[indice];
@@ -288,40 +271,73 @@ function seleccionarSiguienteRetador() {
     }
   }
 
-  // LLAMADO AL DOM: Al de la izquierda le pasamos 'true' para ver sus partidos. Al de la derecha 'false'.
+
   mostrarJugadorEnPantalla(jugadorIzquierda, "img-izquierda", "nombre-izquierda", true); //
   mostrarJugadorEnPantalla(jugadorDerecha, "img-derecha", "nombre-derecha", false); //
 }
 
-function jugar(eleccion) { //
+
+
+async function guardarPuntajeEnServidor(puntaje) {
+  const usuario = localStorage.getItem("usuario_logueado");
+
+  if (!usuario) {
+    console.warn("No hay usuario logueado, no se guarda el puntaje.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:4000/actualizarRecord", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, puntaje }),
+    });
+    const resultado = await response.json();
+    console.log(resultado);
+
+    if (resultado.nuevoRecord) {
+      alert("¡Nuevo récord personal! ");
+    }
+  } catch (error) {
+    console.error("Error al guardar el puntaje:", error);
+  }
+}
+
+
+function jugar(eleccion) {
+  let juegoTerminado = false;
+  if (juegoTerminado) return; 
+
   const partidosIzquierda = parseInt(jugadorIzquierda.partidos_totales);
   const partidosDerecha = parseInt(jugadorDerecha.partidos_totales);
 
   let gano = false;
 
-  if (eleccion === 'mayor') { //
+  if (eleccion === 'mayor') {
     gano = (partidosDerecha >= partidosIzquierda);
-  } else if (eleccion === 'menor') { //
+  } else if (eleccion === 'menor') {
     gano = (partidosDerecha <= partidosIzquierda);
   }
 
   if (gano) {
-    
     puntajeActual++;
     actualizarPuntajePantalla();
-    
-    // El retador pasa a la izquierda
     jugadorIzquierda = jugadorDerecha;
     seleccionarSiguienteRetador();
-} else {
+  } else {
+    juegoTerminado = true;
+    document.getElementById("btn-mas-partidos").disabled = true;
+    document.getElementById("btn-menos-partidos").disabled = true;
+
     alert(`¡Perdiste! ${jugadorDerecha.nombre_completo} tenía ${partidosDerecha} partidos y ${jugadorIzquierda.nombre_completo} tenía ${partidosIzquierda}.`);
-    
-    guardarPuntajeEnServidor(puntajeActual); 
-    
-    
-    return;
+
+    guardarPuntajeEnServidor(puntajeActual);
+    reiniciarPartida()
   }
 }
+
+
+
 
 function actualizarPuntajePantalla() {
   document.getElementById("valor-puntaje-actual").textContent = puntajeActual; //
