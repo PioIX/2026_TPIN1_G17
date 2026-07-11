@@ -90,7 +90,6 @@ if (document.getElementById("selectJugadoresPosicion")) cargarJugadores("selectJ
 
 async function llamadoAlDeleteJugadores() {
   //Mando los datos al BACKEND
-  //   let nombre = document.getElementById("selectEquipos").value;
 
   let datos = {
     nombre_completo: document.getElementById("selectJugadores").value,
@@ -136,7 +135,7 @@ if (document.getElementById("selectUsuarios")) {
 
 async function llamadoAlDeleteUsuarios() {
   //Mando los datos al BACKEND
-  //   let nombre = document.getElementById("selectEquipos").value;
+
 
   let datos = {
     usuario: document.getElementById("selectUsuarios").value,
@@ -340,10 +339,10 @@ function jugar(eleccion) {
 
 
 function actualizarPuntajePantalla() {
-  document.getElementById("valor-puntaje-actual").textContent = puntajeActual; //
+  document.getElementById("valor-puntaje-actual").textContent = puntajeActual; 
 }
 
-if (document.getElementById("contenedor-juego")) { //
+if (document.getElementById("contenedor-juego")) { 
   iniciarJuego();
 }
 

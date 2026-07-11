@@ -22,10 +22,6 @@ app.get("/", function (req, res) {
   });
 });
 
-/**
- * req = request. en este objeto voy a tener todo lo que reciba del cliente
- * res = response. Voy a responderle al cliente
- */
 
 // 2
 const MySQL = require("./modulos/mysql.js");
