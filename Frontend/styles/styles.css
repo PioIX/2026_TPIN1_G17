@@ -272,14 +272,42 @@ main {
 
 .botones-comparar {
     position: absolute;
-    right: 6%;
-    top: 60%;
+    left: 50%;
+    top: 60%; 
+    transform: translate(-50%, -50%);
+
+    display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
-    margin: 0;
+
     z-index: 10;
 }
 
 .botones-comparar button {
     padding: 14px 40px;
+}
+
+#nombre-derecha {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow:
+        2px 2px 8px rgba(0,0,0,.8),
+        0 0 15px rgba(255,255,255,.2);
+}
+
+#nombre-izquierda {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow:
+        2px 2px 8px rgba(0,0,0,.8),
+        0 0 15px rgba(255,255,255,.2);
 }
