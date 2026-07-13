@@ -51,23 +51,23 @@ app.get("/usuarios", async function (req, res) {
 
 app.post('/register', async function (req, res) {
   try {
-  console.log(req.body)
-  let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
-  console.log(req.body)
-  if (usuarioExistente.length > 0) {
-    res.send({res:"Ya existe este usuario"});
-  }
-  else {
-    realizarQuery(`
+    console.log(req.body)
+    let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
+    console.log(req.body)
+    if (usuarioExistente.length > 0) {
+      res.send({ res: "Ya existe este usuario" });
+    }
+    else {
+      realizarQuery(`
       INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
       ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
-    res.send({res:"Usuario agregado"})
-  }
-  
+      res.send({ res: "Usuario agregado" })
+    }
+
   } catch (error) {
     console.error("Error al borrar:", error);
-    res.status(500).send({ 
-      res: "Error del servidor" 
+    res.status(500).send({
+      res: "Error del servidor"
     });
   }
 })
@@ -76,8 +76,8 @@ app.post('/register', async function (req, res) {
 
 app.post('/login', async function (req, res) {
   try {
-    if (!req.body.usuario || !req.body.contrasena){
-    return res.send({ res: "No pueden haber campos vacíos" });
+    if (!req.body.usuario || !req.body.contrasena) {
+      return res.send({ res: "No pueden haber campos vacíos" });
     }
     let usuario = await realizarQuery(`SELECT * FROM Users WHERE usuario='${req.body.usuario}' AND contrasena='${req.body.contrasena}'`);
     if (usuario.length > 0) {
@@ -133,7 +133,6 @@ app.post("/adddata", async function (req, res) {
 
 app.delete("/jugadoresBorrar", async function (req, res) {
   try {
-    console.log("TEST:", req.body.nombre_completo);
     if (req.body.nombre_completo != "") {
       await realizarQuery(
         `DELETE FROM Players WHERE nombre_completo='${req.body.nombre_completo}';`
@@ -149,11 +148,10 @@ app.delete("/jugadoresBorrar", async function (req, res) {
     });
   }
 });
-  
+
 
 app.delete("/usuariosBorrar", async function (req, res) {
   try {
-    console.log("TEST:", req.body.usuario);
     if (req.body.usuario != "") {
       await realizarQuery(
         `DELETE FROM Users WHERE usuario='${req.body.usuario}';`
@@ -192,10 +190,10 @@ app.put('/jugadoresActualizarPosicion', async function (req, res) {
       UPDATE Players SET posicion_en_la_cancha='${req.body.posicion_en_la_cancha}'
       WHERE nombre_completo='${req.body.nombre_completo}'
       `);
-      res.send({ res: "Posición actualizada" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ res: "Error del servidor" });
+    res.send({ res: "Posición actualizada" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
   }
 });
 
@@ -215,28 +213,23 @@ app.put('/usuariosActualizarAdministrador', async function (req, res) {
 
 
 
-
-
-
 app.put('/actualizarRecord', async function (req, res) {
-    try {
-      let datosUsuario = await realizarQuery(`SELECT record_maximo FROM Users WHERE usuario='${req.body.usuario}'`);
-      
-      if (datosUsuario.length > 0) {
-        let recordActual = datosUsuario[0].record_maximo;
-        let nuevoPuntaje = parseInt(req.body.puntaje); //el parseint es para que tire si o si numero
-  
-        if (nuevoPuntaje > recordActual) {
-          await realizarQuery(`UPDATE Users SET record_maximo=${nuevoPuntaje} WHERE usuario='${req.body.usuario}'`);
-          return res.send({ res: "¡Nuevo récord guardado!", nuevoRecord: true });
-        }
+  try {
+    let datosUsuario = await realizarQuery(`SELECT record_maximo FROM Users WHERE usuario='${req.body.usuario}'`);
+    if (datosUsuario.length > 0) {
+      let recordActual = datosUsuario[0].record_maximo;
+      let nuevoPuntaje = parseInt(req.body.puntaje); //el parseint es para que tire si o si numero
+      if (nuevoPuntaje > recordActual) {
+        await realizarQuery(`UPDATE Users SET record_maximo=${nuevoPuntaje} WHERE usuario='${req.body.usuario}'`);
+        return res.send({ res: "¡Nuevo récord guardado!", nuevoRecord: true });
       }
-      res.send({ res: "No superó el récord", nuevoRecord: false });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ res: "Error del servidor" });
     }
-  });
+    res.send({ res: "No superó el récord", nuevoRecord: false });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
 
 
 app.get("/datosUsuario", async function (req, res) {

@@ -216,8 +216,7 @@ async function llamadoAlPutUsuariosAdministrador() {
 
 
 
-// --- LÓGICA DEL JUEGO CON INTEGRACIÓN DE NOMBRE, FOTO Y PARTIDOS ---
-
+//a partir de aca abajo del juego
 let listaJugadores = [];
 let nombresJugados = [];
 let jugadorIzquierda = null;
@@ -334,9 +333,6 @@ function jugar(eleccion) {
     reiniciarPartida()
   }
 }
-
-
-
 
 function actualizarPuntajePantalla() {
   document.getElementById("valor-puntaje-actual").textContent = puntajeActual; 
