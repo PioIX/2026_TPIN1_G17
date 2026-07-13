@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar Datos - Versión Scaloneta</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+    <div class="contenedor-general">
+        <section>
+            <h1 class="titulo-pantalla">Eliminar Datos</h1>
+            <div class="bloque-inputs">
+                
+                <h1>Eliminar Jugador</h1>
+                <label>Elija el jugador que desea eliminar </label>
+                <select id="selectJugadores">
+                </select>
+                <br><br>
+                
+            </div>
+            <div class="bloque-botones">
+                <button onclick="llamadoAlDeleteJugadores()" id="btnEnviarEliminar" class="btn-blanco">ELIMINAR JUGADOR</button>
+                
+            </div>
+        </section>
+
+
+
+        <section>
+            <div class="bloque-inputs">
+                
+                <h1>Eliminar Usuario</h1>
+                <label>Elija el usuario que desea eliminar </label>
+                <select id="selectUsuarios">
+                </select>
+                <br><br>
+                
+            </div>
+            <div class="bloque-botones">
+                <button onclick="llamadoAlDeleteUsuarios()" id="btnEnviarEliminar" class="btn-blanco">ELIMINAR USUARIO</button>
+                
+            </div>
+
+        </section>
+        <hr><hr><hr>
+        <a href="admin.html"><button id="btnVolverAdminEliminar" class="btn-blanco" type="button">VOLVER</button></a>
+    </div>
+
+    <footer class="pie-creditos">
+        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+        <p class="curso">5B Informática</p>
+    </footer>
+    
+        <script src="scripts/logic.js"></script>
+        <script src="scripts/dom.js"></script>
+</body>
+</html>

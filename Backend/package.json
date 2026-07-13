@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Primer proyecto interdisciplinario",
+  "main": "index.js",
+
+  "scripts": {
+  "home": "nodemon --env-file=home.env index.js",
+  "pio": "nodemon --env-file=pio.env index.js"
+},
+  "keywords": [
+    "ES"
+  ],
+  "author": "Hilario Reddel",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.5",
+    "nodemon": "^3.1.14"
+  }
+}

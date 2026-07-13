@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugar - Mayor o Menor</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+    <body>
+        <main class="contenedor-general">
+            <header id="encabezado-juego">
+                <h1 id="pregunta">¿Quién tiene más partidos jugados?</h1>
+            </header>
+
+            <section id="contenedor-juego">
+                <p id="puntaje-actual">PUNTAJE ACTUAL: <span id="valor-puntaje-actual">0</span></p>
+                <hr>
+                <div id="jugadores">
+                    <div class="jugador-izquierda">
+                        <img id="img-izquierda" src="" alt="">
+                        <p id="nombre-izquierda">...</p>
+                    </div>
+
+                    <div class="jugador-derecha">
+                        <img id="img-derecha" src="" alt="">
+                        <p id="nombre-derecha">...</p>
+                    </div>
+
+                    <div class="bloque-botones botones-comparar">
+                        <button type="button" id="btn-mas-partidos" class="btn-blanco" onclick="jugar('mayor')">MAS PARTIDOS</button>
+                        <button type="button" id="btn-menos-partidos" class="btn-blanco" onclick="jugar('menor')">MENOS PARTIDOS</button>
+                    </div>
+                </div>
+            </section>
+            <div class="bloque-botones">
+                <a href="mainmenu.html"><button type="button" class="btn-blanco">VOLVER</button></a>
+            </div>
+
+            <footer class="pie-creditos">
+                <p>Hilario Reddel-Tomas Miranda-Lucas Fabiani-Facundo Poet</p>
+                <p>5B Informática</p>
+            </footer>
+        </main>
+
+        <script src="scripts/dom.js"></script>
+        <script src="scripts/logic.js"></script>
+    </body>
+</html>

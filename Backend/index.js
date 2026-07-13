@@ -1,0 +1,262 @@
+var express = require("express"); //Tipo de servidor: Express
+var bodyParser = require("body-parser"); //Convierte los JSON
+var cors = require("cors");
+const { realizarQuery } = require("./modulos/mysql");
+
+var app = express(); //Inicializo express
+var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 4000
+
+// Convierte una petición recibida (POST-GET...) a objeto JSON
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+
+//Pongo el servidor a escuchar
+app.listen(port, function () {
+  console.log(`Server running in http://localhost:${port}`);
+});
+
+app.get("/", function (req, res) {
+  res.status(200).send({
+    message: "GET Home route working fine!",
+  });
+});
+
+
+// 2
+const MySQL = require("./modulos/mysql.js");
+
+app.get("/jugadores", async function (req, res) {
+  try {
+    let jugadores = await realizarQuery(`SELECT * FROM Players`);
+    res.send(jugadores);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.get("/usuarios", async function (req, res) {
+  try {
+    let usuarios = await realizarQuery(`SELECT usuario FROM Users`);
+    res.send(usuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.post('/register', async function (req, res) {
+  try {
+    console.log(req.body)
+    let usuarioExistente = await realizarQuery(`SELECT usuario FROM Users WHERE usuario='${req.body.usuario}' `);
+    console.log(req.body)
+    if (usuarioExistente.length > 0) {
+      res.send({ res: "Ya existe este usuario" });
+    }
+    else {
+      realizarQuery(`
+      INSERT INTO Users (usuario,contrasena,record_maximo,es_admin) VALUES
+      ("${req.body.usuario}","${req.body.contrasena}","${req.body.record_maximo ?? 0}","${req.body.es_admin ?? 0}");`)
+      res.send({ res: "Usuario agregado" })
+    }
+
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor"
+    });
+  }
+})
+
+
+
+app.post('/login', async function (req, res) {
+  try {
+    if (!req.body.usuario || !req.body.contrasena) {
+      return res.send({ res: "No pueden haber campos vacíos" });
+    }
+    let usuario = await realizarQuery(`SELECT * FROM Users WHERE usuario='${req.body.usuario}' AND contrasena='${req.body.contrasena}'`);
+    if (usuario.length > 0) {
+      res.send({ res: "Login correcto", usuario: usuario[0] });
+    } else {
+      res.status(401).send({ res: "Usuario o contraseña incorrectos" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.post("/adddata", async function (req, res) {
+  try {
+    if (!req.body.nombre_completo || !req.body.partidos_totales || !req.body.posicion_en_la_cancha) {
+      return res.send({ res: "No pueden haber campos vacíos" });
+    }
+    const posicionesValidas = [
+      "Delantero",
+      "Defensor",
+      "Arquero",
+      "Mediocampista",
+    ];
+    if (!posicionesValidas.includes(req.body.posicion_en_la_cancha)) {
+      return res.send({ res: "Posición en la cancha inválida" });
+    }
+
+    console.log(req.body);
+
+    let jugadorExistente = await realizarQuery(
+      `SELECT nombre_completo FROM Players WHERE nombre_completo='${req.body.nombre_completo}'`
+    );
+
+    if (jugadorExistente.length > 0) {
+      res.send({ res: "Ya existe este jugador" });
+    } else {
+      realizarQuery(`
+        INSERT INTO Players (nombre_completo, partidos_totales, posicion_en_la_cancha) VALUES
+        ("${req.body.nombre_completo}", "${req.body.partidos_totales}", "${req.body.posicion_en_la_cancha}");
+      `);
+      res.send({ res: "Jugador agregado" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+
+app.delete("/jugadoresBorrar", async function (req, res) {
+  try {
+    if (req.body.nombre_completo != "") {
+      await realizarQuery(
+        `DELETE FROM Players WHERE nombre_completo='${req.body.nombre_completo}';`
+      );
+      res.send({ res: "Jugador eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del jugador" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
+});
+
+
+app.delete("/usuariosBorrar", async function (req, res) {
+  try {
+    if (req.body.usuario != "") {
+      await realizarQuery(
+        `DELETE FROM Users WHERE usuario='${req.body.usuario}';`
+      );
+      res.send({ res: "Usuario eliminado" });
+    } else {
+      res.status(400).send({ res: "Falta el nombre del usuario" });
+    }
+  } catch (error) {
+    console.error("Error al borrar:", error);
+    res.status(500).send({
+      res: "Error del servidor",
+    });
+  }
+});
+
+
+app.put('/jugadoresActualizarPartidos', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET partidos_totales='${req.body.partidos_totales}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+    `);
+    res.send({ res: "Jugador actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.put('/jugadoresActualizarPosicion', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Players SET posicion_en_la_cancha='${req.body.posicion_en_la_cancha}'
+      WHERE nombre_completo='${req.body.nombre_completo}'
+      `);
+    res.send({ res: "Posición actualizada" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.put('/usuariosActualizarAdministrador', async function (req, res) {
+  try {
+    await realizarQuery(`
+      UPDATE Users SET es_admin='${req.body.es_admin}'
+      WHERE usuario='${req.body.usuario}'
+    `);
+    res.send({ res: "Usuario actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+
+app.put('/actualizarRecord', async function (req, res) {
+  try {
+    let datosUsuario = await realizarQuery(`SELECT record_maximo FROM Users WHERE usuario='${req.body.usuario}'`);
+    if (datosUsuario.length > 0) {
+      let recordActual = datosUsuario[0].record_maximo;
+      let nuevoPuntaje = parseInt(req.body.puntaje); //el parseint es para que tire si o si numero
+      if (nuevoPuntaje > recordActual) {
+        await realizarQuery(`UPDATE Users SET record_maximo=${nuevoPuntaje} WHERE usuario='${req.body.usuario}'`);
+        return res.send({ res: "¡Nuevo récord guardado!", nuevoRecord: true });
+      }
+    }
+    res.send({ res: "No superó el récord", nuevoRecord: false });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.get("/datosUsuario", async function (req, res) {
+  try {
+    let datos = await realizarQuery(
+      `SELECT usuario, record_maximo FROM Users WHERE usuario='${req.query.usuario}'`
+    );
+    if (datos.length > 0) {
+      res.send(datos[0]);
+    } else {
+      res.status(404).send({ res: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});
+
+
+app.get("/ranking", async function (req, res) {
+  try {
+    let ranking = await realizarQuery(
+      `SELECT usuario, record_maximo FROM Users ORDER BY record_maximo DESC LIMIT 5`
+    );
+    res.send(ranking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ res: "Error del servidor" });
+  }
+});

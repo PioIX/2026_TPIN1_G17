@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Datos - Versión Scaloneta</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div>    
+        <div class="contenedor-general">
+            <h1>Modificar la Cantidad de Partidos de un Jugador</h1>
+            <label>Seleccione el jugador:</label>
+            <select id="selectJugadoresPosicion"></select>
+            <br><br>
+            <label>Nueva cantidad de partidos:</label>
+            <input type="number" id="inputPartidosTotales" placeholder="Ej: 50" />
+            <br><br>
+            <button onclick="llamadoAlPutJugadoresPartidos()">Actualizar Partidos</button>
+
+        </div>
+
+
+        <div class="contenedor-general">
+            <h1>Modificar la Posicion en la cancha de un Jugador</h1>
+            <label>Seleccione el jugador:</label>
+            <select id="selectJugadores"></select>
+            <br><br>
+            <label>Nueva posicion en la cancha:</label>
+            <select id="selectPosicion">
+                <option value="Delantero">Delantero</option>
+                <option value="Defensor">Defensor</option>
+                <option value="Arquero">Arquero</option>
+                <option value="Mediocampista">Mediocampista</option>
+            </select>
+            <br><br>
+            <button onclick="llamadoAlPutJugadoresPosicion()">Actualizar Posición</button>
+        </div>
+    </div>
+    
+
+
+
+    <div>    
+        <div class="contenedor-general">
+            <h1>Modificar si un Usuario es Admin</h1>
+            <label>Seleccione el usuario:</label>
+            <select id="selectUsuarios"></select>
+            <br><br>
+         
+            <label>Cambiar poder de administrar</label>
+                <select id="inputEsAdmin">
+                    <option value="1">Administrador</option>
+                    <option value="0">No Administrador</option>
+                </select>
+            <br><br>
+            <button onclick="llamadoAlPutUsuariosAdministrador()">Actualizar Administracion</button>
+            <br><br><br><br><br>
+
+            <div class="bloque-botones">
+                <a href="admin.html"><button id="btnVolverAdminModificar" class="btn-blanco" type="button">VOLVER</button></a>
+            </div>
+        </div>
+    </div>
+        
+    
+
+
+    <footer class="pie-creditos">
+        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+        <p class="curso">5B Informática</p>
+    </footer>
+    <script src="scripts/logic.js"></script>
+    <script src="scripts/dom.js"></script>
+</body>
+</html>

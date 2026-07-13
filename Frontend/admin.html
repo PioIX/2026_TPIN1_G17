@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Versión Scaloneta</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <script>
+        if (localStorage.getItem("es_admin") != 1) {
+            alert("No tenés permisos para acceder a esta página");
+            window.location.href = "mainmenu.html";
+        }
+    </script>
+    <div class="contenedor-general">
+        
+        <h1 class="titulo-pantalla">Administrador</h1>
+
+        <div class="bloque-botones-verticales">
+            <a href="adddata.html"><button type="button">AGREGAR DATOS</button></a>
+            <a href="modifydata.html"><button type="button">MODIFICAR DATOS</button></a>
+            <a href="eliminatedata.html"><button type="button">ELIMINAR DATOS</button></a>
+            <a href="mainmenu.html"><button type="button">VOLVER</button></a>
+        </div>
+
+    </div>
+
+    <footer class="pie-creditos">
+        <p>Hilario Reddel - Tomas Miranda - Lucas Fabiani - Facundo Poet</p>
+        <p class="curso">5B Informática</p>
+    </footer>
+    <script src="scripts/logic.js"></script>
+    <script src="scripts/dom.js"></script>
+</body>
