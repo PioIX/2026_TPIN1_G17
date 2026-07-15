@@ -71,6 +71,7 @@ async function llamadoAlPost(datos) {
   console.log(response); //Imprimo el json
   let result = await response.json();
   console.log(result);
+  alert(result.res);
 }
 
 // FUNCION PARA ELIMINAR JUGADORES
